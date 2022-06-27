@@ -5,6 +5,7 @@ using {managed, cuid} from '@sap/cds/common';
 entity Catalogs : managed {
     key ID : String not null;
     title : String not null;
+    isReadOnly: Boolean default false;
 
     tiles : Association to many CatalogTile on tiles.catalogId = ID;
     roles : Association to many RoleCatalog on roles.catalogId = ID;
@@ -19,6 +20,7 @@ entity Tiles : managed {
     target : String not null;
     useTagetMapping : Boolean default false;
     parameters : String;
+    isReadOnly: Boolean default false;
 
     catalogs : Association to many CatalogTile on catalogs.tileId = ID;
     groups : Association to many GroupTile on groups.tileId = ID;
@@ -45,19 +47,23 @@ entity TargetMappings : managed {
     isLaptop : Boolean default true;
     isTable : Boolean default true;
     isPhone : Boolean default true;
+    isReadOnly: Boolean default false;
 }
 
 entity SemanticObjects : managed {
     key semanticObject : String;
+    isReadOnly: Boolean default false;
 }
 
 entity Actions : managed {
     key action : String;
+    isReadOnly: Boolean default false;
 }
 
 entity Groups : managed {
     key ID : String;
     title : String not null;
+    isReadOnly: Boolean default false;
 
     tiles : Association to many GroupTile on tiles.groupId = ID;
     roles : Association to many RoleGroup on roles.groupId = ID;
@@ -74,6 +80,7 @@ entity GroupTile : managed {
 entity Roles : managed {
     key ID : String;
     desc : String;
+    isReadOnly: Boolean default false;
 
     catalogs : Association to many RoleCatalog on catalogs.roleId = ID;
     groups : Association to many RoleGroup on groups.roleId = ID;

@@ -1,0 +1,140 @@
+<mvc:View
+    class="sapUiSizeCompact"
+    controllerName="fiori.roles.controller.Details"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns="sap.uxap"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:m="sap.m">
+    <ObjectPageLayout id="ObjectPageLayout" showAnchorBarPopover="false" upperCaseAnchorBar="false">
+		<headerTitle>
+			<ObjectPageDynamicHeaderTitle>
+				<heading>
+					<m:Title text="Role {ID}"/>
+				</heading>
+
+				<snappedTitleOnMobile>
+					<m:Title text="Role {ID}" />
+				</snappedTitleOnMobile>
+
+				<actions>
+					<m:Button text="Edit" enabled="{= !${isReadOnly}}" visible="{= !${view>/isEdit}}" press="onEdit"/>
+                    <m:Button text="Save" enabled="{= !${isReadOnly}}" visible="{= ${view>/isEdit}}" press="onSave"/>
+					<m:Button text="Delete" enabled="{= !${isReadOnly}}" press="onDelete"/>
+				</actions>
+			</ObjectPageDynamicHeaderTitle>
+		</headerTitle>
+
+		<headerContent>
+        <m:Title text="{desc}" titleStyle="H6"/>
+		</headerContent>
+
+		<sections>
+			<ObjectPageSection titleUppercase="false" title="General information">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<f:SimpleForm id="idInsertForm"
+                                editable="true"
+                                layout="ResponsiveGridLayout"
+                                labelSpanXL="4"
+                                labelSpanL="4"
+                                labelSpanM="4"
+                                labelSpanS="12"
+                                adjustLabelSpan="false"
+                                emptySpanXL="1"
+                                emptySpanL="1"
+                                emptySpanM="1"
+                                emptySpanS="0"
+                                columnsXL="1"
+                                columnsL="1"
+                                columnsM="1"
+                                singleContainerFullSize="false" >
+                                <f:content>
+                                    <m:Label text="Role ID" required="true" />
+                                    <m:Input name="ID" value="{ID}" enabled="false" />
+                                    <m:Label text="Descrption" />
+                                    <m:Input name="desc" value="{desc}" enabled="{view>/isEdit}" />
+                                </f:content>
+                            </f:SimpleForm>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+			<ObjectPageSection titleUppercase="false" title="Catalogs">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:List id="idCatalogList">
+                                <m:headerToolbar>
+                                    <m:Toolbar>
+                                        <m:ToolbarSpacer />
+                                        <m:Button icon="sap-icon://add" visible="{view>isEdit}" text="Insert" press="onInsert">
+                                            <m:customData>
+                                                <core:CustomData key="dialogName" value="InsertRoleDialog" />
+                                            </m:customData>
+                                        </m:Button>
+                                        <m:Button text="Delete" visible="{view>isEdit}" press="onDelete" />
+                                    </m:Toolbar>
+                                </m:headerToolbar>
+                                <m:items>
+
+                                </m:items>
+                            </m:List>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+            <ObjectPageSection titleUppercase="false" title="Groups">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:List id="idGroupList" mode="{= ${isEdit} ? 'MultiSelect' : 'None'}">
+                                <m:headerToolbar>
+                                    <m:Toolbar>
+                                        <m:ToolbarSpacer />
+                                        <m:Button icon="sap-icon://add" visible="{view>isEdit}" text="Insert" press="onInsert">
+                                            <m:customData>
+                                                <core:CustomData key="dialogName" value="InsertRoleDialog" />
+                                            </m:customData>
+                                        </m:Button>
+                                        <m:Button text="Delete" visible="{view>isEdit}" press="onDelete" />
+                                    </m:Toolbar>
+                                </m:headerToolbar>
+                            </m:List>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+
+            <ObjectPageSection titleUppercase="false" title="Users">
+				<subSections>
+					<ObjectPageSubSection>
+						<blocks>
+							<m:List id="idUserList">
+                                <m:headerToolbar>
+                                    <m:Toolbar>
+                                        <m:ToolbarSpacer />
+                                        <m:Button icon="sap-icon://add" visible="{view>isEdit}" text="Insert" press="onInsert">
+                                            <m:customData>
+                                                <core:CustomData key="dialogName" value="InsertRoleDialog" />
+                                            </m:customData>
+                                        </m:Button>
+                                        <m:Button text="Delete" visible="{view>isEdit}" press="onDelete" />
+                                    </m:Toolbar>
+                                </m:headerToolbar>
+                                <m:items>
+
+                                </m:items>
+                            </m:List>
+						</blocks>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+
+	</ObjectPageLayout>
+</mvc:View>

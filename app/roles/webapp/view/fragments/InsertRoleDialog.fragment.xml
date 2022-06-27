@@ -1,0 +1,42 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core">
+	<Dialog
+		class="sapUiSizeCompact"
+		title="Insert role">
+		<customData>
+			<core:CustomData key="dialogName" value="InsertRoleDialog" />
+		</customData>
+		<content>
+			<f:SimpleForm id="idInsertForm"
+				editable="true"
+				layout="ResponsiveGridLayout"
+				labelSpanXL="4"
+				labelSpanL="4"
+				labelSpanM="4"
+				labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="1"
+				emptySpanL="1"
+				emptySpanM="1"
+				emptySpanS="0"
+				columnsXL="1"
+				columnsL="1"
+				columnsM="1"
+				singleContainerFullSize="false" >
+				<f:content>
+					<Label text="Role ID" required="true" />
+					<Input name="ID" value="{ID}" />
+					<Label text="Descrption" />
+					<Input name="desc" value="{desc}" />
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<buttons>
+			<Button text="Insert" press="onInsert" />
+			<Button text="Cancle" press="onCancel" />
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>
