@@ -48,6 +48,7 @@ modules:
           name: srv-binding
           strictSSL: true
           url: ~{srv-url}
+      - name: fiori-db
     build-parameters:
       requires:
         - artifacts:
