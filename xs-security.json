@@ -1,0 +1,46 @@
+{
+    "tenant-mode": "dedicated",
+    "scopes": [
+        {
+            "name": "$XSAPPNAME.Administrator",
+            "description": "Administrator"
+        },
+        {
+            "name": "$XSAPPNAME.User",
+            "description": "User"
+        }
+    ],
+    "attributes": [
+        {
+            "name": "Catalogs",
+            "description": "List of catalogs with comma separators",
+            "valueType": "string"
+        },
+        {
+            "name": "Groups",
+            "description": "List of groups with comma separators",
+            "valueType": "string"
+        }
+    ],
+    "role-templates": [
+        {
+            "name": "Administrator",
+            "description": "Fiori administrator",
+            "scope-references": [
+                "$XSAPPNAME.Administrator"
+            ],
+            "attribute-references": []
+        },
+        {
+            "name": "User",
+            "description": "Fiori user",
+            "scope-references": [
+                "$XSAPPNAME.User"
+            ],
+            "attribute-references": [
+                "Catalogs",
+                "Groups"
+            ]
+        }
+    ]
+}

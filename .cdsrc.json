@@ -1,0 +1,22 @@
+{
+    "[development]": {
+        "auth": {
+            "passport": {
+                "strategy": "mock",
+                "users": {
+                    "ivan.chebykin@sap.com": {
+                        "password": "initial",
+                        "ID": "ivan.chebykin@sap.com",
+                        "userAttributes": {
+                            "email": "ivan.chebykin@sap.com"
+                        },
+                        "roles": [
+                            "Administrator",
+                            "User"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

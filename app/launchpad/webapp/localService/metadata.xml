@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:DataServices>
+        <Schema Namespace="Interop" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <FunctionImport Name="getPage" Function="Interop.getPage"/>
+                <FunctionImport Name="getUserInfo" Function="Interop.getUserInfo"/>
+                <FunctionImport Name="isFioriUser" Function="Interop.isFioriUser"/>
+                <FunctionImport Name="isFioriAdmin" Function="Interop.isFioriAdmin"/>
+            </EntityContainer>
+            <ComplexType Name="Group">
+                <Property Name="ID" Type="Edm.String" Nullable="false"/>
+                <Property Name="title" Type="Edm.String" Nullable="false"/>
+                <Property Name="tiles" Type="Collection(Interop.Tile)" Nullable="false"/>
+            </ComplexType>
+            <ComplexType Name="Tile">
+                <Property Name="title" Type="Edm.String"/>
+                <Property Name="subtitle" Type="Edm.String"/>
+                <Property Name="keywords" Type="Edm.String"/>
+                <Property Name="icon" Type="Edm.String"/>
+                <Property Name="target" Type="Edm.String" Nullable="false"/>
+                <Property Name="useTagetMapping" Type="Edm.Boolean" DefaultValue="false"/>
+                <Property Name="parameters" Type="Edm.String"/>
+            </ComplexType>
+            <ComplexType Name="User">
+                <Property Name="username" Type="Edm.String"/>
+            </ComplexType>
+            <Function Name="getPage" IsBound="false" IsComposable="false">
+                <ReturnType Type="Collection(Interop.Group)" Nullable="false"/>
+            </Function>
+            <Function Name="getUserInfo" IsBound="false" IsComposable="false">
+                <ReturnType Type="Interop.User"/>
+            </Function>
+            <Function Name="isFioriUser" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.Boolean"/>
+            </Function>
+            <Function Name="isFioriAdmin" IsBound="false" IsComposable="false">
+                <ReturnType Type="Edm.Boolean"/>
+            </Function>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

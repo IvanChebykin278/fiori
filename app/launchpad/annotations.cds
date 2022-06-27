@@ -1,0 +1,1 @@
+using Interop as service from '../../srv/Interop';
