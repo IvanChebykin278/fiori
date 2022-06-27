@@ -36,9 +36,9 @@ modules:
     parameters:
       buildpack: nodejs_buildpack
 
-  - name: launchpad-approuter
+  - name: approuter
     type: nodejs
-    path: launchpad-approuter
+    path: approuter
     requires:
       - name: fiori-uaa
       - name: srv-api
@@ -53,7 +53,11 @@ modules:
         - artifacts:
             - ./*
           name: launchpad-app
-          target-path: resources/ui
+          target-path: resources/ui/launchpad
+        - artifacts:
+            - ./*
+          name: designer-app
+          target-path: resources/ui/designer
 
   - name: launchpad-app
     type: html5
@@ -65,26 +69,6 @@ modules:
         - npm install
         - npm run build:cf
       supported-platforms: []
-
-  - name: designer-approuter
-    type: nodejs
-    path: designer-approuter
-    requires:
-      - name: fiori-uaa
-      - name: srv-api
-        group: destinations
-        properties:
-          forwardAuthToken: true
-          name: srv-binding
-          strictSSL: true
-          url: ~{srv-url}
-      - name: fiori-db
-    build-parameters:
-      requires:
-        - artifacts:
-            - ./*
-          name: designer-app
-          target-path: resources/ui
 
   - name: designer-app
     type: html5
