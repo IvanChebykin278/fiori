@@ -67,20 +67,21 @@
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-							<m:List id="idCatalogList">
+							<m:List id="idCatalogList" mode="{= ${view>/isEdit} ? 'MultiSelect' : 'None'}" items="{catalogs}">
                                 <m:headerToolbar>
-                                    <m:Toolbar>
+                                    <m:Toolbar visible="{= ${view>/isEdit} &amp;&amp; !${isReadOnly}}">
                                         <m:ToolbarSpacer />
-                                        <m:Button icon="sap-icon://add" visible="{view>isEdit}" text="Insert" press="onInsert">
+                                        <m:Button icon="sap-icon://add" visible="{view>isEdit}" text="Insert" press="onOpenInsertDialog">
                                             <m:customData>
-                                                <core:CustomData key="dialogName" value="InsertRoleDialog" />
+                                                <core:CustomData key="dialogName" value="InsertCatalogDialog" />
+                                                <core:CustomData key="listId" value="idCatalogList" />
                                             </m:customData>
                                         </m:Button>
-                                        <m:Button text="Delete" visible="{view>isEdit}" press="onDelete" />
+                                        <m:Button text="Delete" press="onDelete" />
                                     </m:Toolbar>
                                 </m:headerToolbar>
                                 <m:items>
-
+                                    <m:StandardListItem title="{catalogId}" />
                                 </m:items>
                             </m:List>
 						</blocks>
@@ -92,18 +93,22 @@
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-							<m:List id="idGroupList" mode="{= ${isEdit} ? 'MultiSelect' : 'None'}">
+							<m:List id="idGroupList" mode="{= ${view>/isEdit} ? 'MultiSelect' : 'None'}" items="{groups}">
                                 <m:headerToolbar>
-                                    <m:Toolbar>
+                                    <m:Toolbar visible="{= ${view>/isEdit} &amp;&amp; !${isReadOnly}}">
                                         <m:ToolbarSpacer />
-                                        <m:Button icon="sap-icon://add" visible="{view>isEdit}" text="Insert" press="onInsert">
+                                        <m:Button icon="sap-icon://add" text="Insert" press="onOpenInsertDialog">
                                             <m:customData>
-                                                <core:CustomData key="dialogName" value="InsertRoleDialog" />
+                                                <core:CustomData key="dialogName" value="InsertGroupDialog" />
+                                                <core:CustomData key="listId" value="idGroupList" />
                                             </m:customData>
                                         </m:Button>
-                                        <m:Button text="Delete" visible="{view>isEdit}" press="onDelete" />
+                                        <m:Button text="Delete" press="onDelete" />
                                     </m:Toolbar>
                                 </m:headerToolbar>
+                                <m:items>
+                                    <m:StandardListItem title="{groupId}" />
+                                </m:items>
                             </m:List>
 						</blocks>
 					</ObjectPageSubSection>
@@ -114,20 +119,21 @@
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-							<m:List id="idUserList">
+							<m:List id="idUserList" items="{users}">
                                 <m:headerToolbar>
-                                    <m:Toolbar>
+                                    <m:Toolbar visible="{= ${view>/isEdit} &amp;&amp; !${isReadOnly}}">
                                         <m:ToolbarSpacer />
-                                        <m:Button icon="sap-icon://add" visible="{view>isEdit}" text="Insert" press="onInsert">
+                                        <m:Button icon="sap-icon://add" visible="{view>isEdit}" text="Insert" press="onOpenInsertDialog">
                                             <m:customData>
-                                                <core:CustomData key="dialogName" value="InsertRoleDialog" />
+                                                <core:CustomData key="dialogName" value="InsertUserDialog" />
+                                                <core:CustomData key="listId" value="idUserList" />
                                             </m:customData>
                                         </m:Button>
                                         <m:Button text="Delete" visible="{view>isEdit}" press="onDelete" />
                                     </m:Toolbar>
                                 </m:headerToolbar>
                                 <m:items>
-
+                                    <m:StandardListItem title="{userId}" />
                                 </m:items>
                             </m:List>
 						</blocks>

@@ -9,21 +9,25 @@ sap.ui.define([
 
     return BaseController.extend("fiori.roles.controller.Details", {
 
+        roleId: null,
         _listConfigs:  [
             {
                 id: 'idCatalogList',
+                type: 'catalog',
                 bindingPath: '/RoleCatalog',
                 filterProperty: 'roleId',
                 dispalyProprty: 'catalogId'
             },
             {
                 id: 'idGroupList',
+                type: 'group',
                 bindingPath: '/RoleGroup',
                 filterProperty: 'roleId',
                 dispalyProprty: 'groupId'
             },
             {
                 id: 'idUserList',
+                type: 'user',
                 bindingPath: '/RoleUser',
                 filterProperty: 'roleId',
                 dispalyProprty: 'userId'
@@ -35,27 +39,50 @@ sap.ui.define([
         },
 
         _onRouteMatch: function(oEvent) {
-            var oArguments = oEvent.getParameter('arguments');
+            this.roleId = oEvent.getParameter('arguments').path;
             var oViewModel = new JSONModel({
-                isEdit: false
+                isEdit: false,
+                dialogValues: {
+                    user: null,
+                    group: null,
+                    catalog: null
+                }
             });
 
-            this._listConfigs.forEach(function(config) {
-                var oList = this.byId(config.id);
-
-                oList.bindItems({
-                    path: config.bindingPath,
-                    filters: [
-                        new Filter(config.filterProperty, FilterOperator.EQ, oArguments.path)
-                    ],
-                    template: new StandardListItem({
-                        title: '{' + config.dispalyProprty + '}'
-                    })
-                });
-            }.bind(this));
-
             this.getView().setModel(oViewModel, 'view');
-            this.getView().bindElement("/Roles('" + oArguments.path + "')");
+            this.getView().bindElement("/Roles('" + this.roleId + "')", {
+                parameters: {
+                    expand: 'users,catalogs,groups'
+                }
+            });
+        },
+
+        onOpenInsertDialog: async function(oEvent) {
+            var oSource = oEvent.getSource();
+            var sDialogName = oSource.data('dialogName');
+            var sListId = oSource.data('listId');
+            var oBinding = this.byId(sListId).getBinding('items');
+            var oBindingContext = oBinding.create({ roleId: this.roleId });
+            var oDialog = await this.getDialog(sDialogName);
+
+            oDialog.bindElement(oBindingContext.getPath());
+            oDialog.open();
+        },
+
+        onInsert: function(oEvent) {
+            var oSource = oEvent.getSource();
+            var oDialog = oSource.getParent();
+
+            oDialog.close();
+        },
+
+        onCancel: function(oEvent) {
+            var oSource = oEvent.getSource();
+            var oDialog = oSource.getParent();
+            var sPath = oDialog.getBindingContext().getPath();
+
+            this.getModel().resetChanges([ sPath ], undefined, true);
+            oDialog.close();
         },
 
         onEdit: function(oEvent) {
@@ -63,7 +90,30 @@ sap.ui.define([
         },
 
         onSave: function(oEvent) {
-            this.getView().getModel('view').setProperty('/isEdit', false);
-        }
+            var oModel = this.getModel();
+
+            if(oModel.hasPendingChanges()) {
+                this.getModel().submitChanges({
+                    success: function(oResponse) {
+                        this.getView().getModel('view').setProperty('/isEdit', false);
+    
+                        sap.m.MessageToast.show('Role has beed saved successfull');
+                    }.bind(this),
+                    error: function(oResponse) {
+    
+                    }.bind(this)
+                });
+            }
+        },
+
+        onSuggest: function (oEvent) {
+			var sTerm = oEvent.getParameter("suggestValue");
+			var aFilters = [];
+			if (sTerm) {
+				aFilters.push(new Filter("ID", FilterOperator.StartsWith, sTerm));
+			}
+
+			oEvent.getSource().getBinding("suggestionItems").filter(aFilters);
+		}
     });
 });

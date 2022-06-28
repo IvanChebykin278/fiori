@@ -17,6 +17,7 @@ sap.ui.define([
              * @override
              */
             init: function () {
+                var oModel = this.getModel();
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
 
@@ -25,6 +26,26 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+
+                oModel.setDeferredGroups(["roles", "catalogs", "groups", "users"]);
+                oModel.setChangeGroups({
+                    "Roles": {
+                        groupId: "roles",
+                        single: true
+                    },
+                    "RoleCatalog": {
+                        groupId: "catalogs",
+                        single: true
+                    },
+                    "RoleGroup": {
+                        groupId: "groups",
+                        single: true
+                    },
+                    "RoleUser": {
+                        groupId: "users",
+                        single: true
+                    }
+                });
             }
         });
     }

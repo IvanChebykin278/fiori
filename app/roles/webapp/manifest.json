@@ -21,7 +21,14 @@
         "type": "OData",
         "settings": {
           "annotations": [],
-          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "pageBuilderService": {
+        "uri": "/v2/service/PageBuilder",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
           "odataVersion": "2.0"
         }
       }
@@ -74,6 +81,13 @@
         "preload": true,
         "settings": {
           "defaultBindingMode": "TwoWay"
+        }
+      },
+      "pageBuilder": {
+        "dataSource": "pageBuilderService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "OneWay"
         }
       }
     },

@@ -82,9 +82,9 @@ entity Roles : managed {
     desc : String;
     isReadOnly: Boolean default false;
 
-    catalogs : Association to many RoleCatalog on catalogs.roleId = ID;
-    groups : Association to many RoleGroup on groups.roleId = ID;
-    users : Association to many RoleUser on users.roleId = ID;
+    catalogs : Composition of many RoleCatalog on catalogs.roleId = ID;
+    groups : Composition of many RoleGroup on groups.roleId = ID;
+    users : Composition of many RoleUser on users.roleId = ID;
 }
 
 entity RoleGroup : managed {

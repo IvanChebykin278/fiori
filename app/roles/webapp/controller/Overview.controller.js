@@ -24,19 +24,20 @@ sap.ui.define([
             var oProperty = oSource.getBindingContext().getProperty();
 
             this.getModel().submitChanges({
+                groupId: 'roles',
                 success: function(oResponse) {
                     this.getRouter().navTo('Details', {
                         path: oProperty.ID
                     });
 
                     sap.m.MessageToast.show('Role has beed inserted successfull');
+                    
+                    oDialog.close();
                 }.bind(this),
                 error: function(oResponse) {
 
                 }.bind(this)
             });
-
-            oDialog.close();
         },
 
         onCancel: function(oEvent) {
