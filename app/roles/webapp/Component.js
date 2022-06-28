@@ -27,22 +27,22 @@ sap.ui.define([
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
 
-                oModel.setDeferredGroups(["roles", "catalogs", "groups", "users"]);
+                oModel.setDeferredGroups(["roles", "idCatalogList", "idGroupList", "idUserList"]);
                 oModel.setChangeGroups({
                     "Roles": {
                         groupId: "roles",
                         single: true
                     },
                     "RoleCatalog": {
-                        groupId: "catalogs",
+                        groupId: "idCatalogList",
                         single: true
                     },
                     "RoleGroup": {
-                        groupId: "groups",
+                        groupId: "idGroupList",
                         single: true
                     },
                     "RoleUser": {
-                        groupId: "users",
+                        groupId: "idUserList",
                         single: true
                     }
                 });

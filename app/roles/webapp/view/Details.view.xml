@@ -19,9 +19,9 @@
 				</snappedTitleOnMobile>
 
 				<actions>
-					<m:Button text="Edit" enabled="{= !${isReadOnly}}" visible="{= !${view>/isEdit}}" press="onEdit"/>
-                    <m:Button text="Save" enabled="{= !${isReadOnly}}" visible="{= ${view>/isEdit}}" press="onSave"/>
-					<m:Button text="Delete" enabled="{= !${isReadOnly}}" press="onDelete"/>
+					<m:Button type="Emphasized" text="Edit" enabled="{= !${isReadOnly}}" visible="{= !${view>/isEdit}}" press="onEdit"/>
+                    <m:Button type="Emphasized" text="Save" enabled="{= !${isReadOnly}}" visible="{= ${view>/isEdit}}" press="onSave"/>
+					<m:Button text="Delete" enabled="{= !${isReadOnly}}" press="onDeleteRole"/>
 				</actions>
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>
@@ -77,7 +77,11 @@
                                                 <core:CustomData key="listId" value="idCatalogList" />
                                             </m:customData>
                                         </m:Button>
-                                        <m:Button text="Delete" press="onDelete" />
+                                        <m:Button text="Delete" visible="{view>isEdit}" press="onDelete">
+                                            <m:customData>
+                                                <core:CustomData key="listId" value="idCatalogList" />
+                                            </m:customData>
+                                        </m:Button>
                                     </m:Toolbar>
                                 </m:headerToolbar>
                                 <m:items>
@@ -103,7 +107,11 @@
                                                 <core:CustomData key="listId" value="idGroupList" />
                                             </m:customData>
                                         </m:Button>
-                                        <m:Button text="Delete" press="onDelete" />
+                                        <m:Button text="Delete" visible="{view>isEdit}" press="onDelete">
+                                            <m:customData>
+                                                <core:CustomData key="listId" value="idGroupList" />
+                                            </m:customData>
+                                        </m:Button>
                                     </m:Toolbar>
                                 </m:headerToolbar>
                                 <m:items>
@@ -119,7 +127,7 @@
 				<subSections>
 					<ObjectPageSubSection>
 						<blocks>
-							<m:List id="idUserList" items="{users}">
+							<m:List id="idUserList" mode="{= ${view>/isEdit} ? 'MultiSelect' : 'None'}" items="{users}">
                                 <m:headerToolbar>
                                     <m:Toolbar visible="{= ${view>/isEdit} &amp;&amp; !${isReadOnly}}">
                                         <m:ToolbarSpacer />
@@ -129,7 +137,11 @@
                                                 <core:CustomData key="listId" value="idUserList" />
                                             </m:customData>
                                         </m:Button>
-                                        <m:Button text="Delete" visible="{view>isEdit}" press="onDelete" />
+                                        <m:Button text="Delete" visible="{view>isEdit}" press="onDelete">
+                                            <m:customData>
+                                                <core:CustomData key="listId" value="idUserList" />
+                                            </m:customData>
+                                        </m:Button>
                                     </m:Toolbar>
                                 </m:headerToolbar>
                                 <m:items>
@@ -141,6 +153,5 @@
 				</subSections>
 			</ObjectPageSection>
 		</sections>
-
 	</ObjectPageLayout>
 </mvc:View>

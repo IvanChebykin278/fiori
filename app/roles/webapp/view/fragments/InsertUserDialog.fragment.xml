@@ -33,7 +33,7 @@
 			</f:SimpleForm>
 		</content>
 		<buttons>
-			<Button text="Ok" press="onInsert" />
+			<Button type="Emphasized" text="Insert" press="onInsert" />
 			<Button text="Cancel" press="onCancel" />
 		</buttons>
 	</Dialog>

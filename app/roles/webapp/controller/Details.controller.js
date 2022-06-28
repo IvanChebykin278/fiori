@@ -10,29 +10,6 @@ sap.ui.define([
     return BaseController.extend("fiori.roles.controller.Details", {
 
         roleId: null,
-        _listConfigs:  [
-            {
-                id: 'idCatalogList',
-                type: 'catalog',
-                bindingPath: '/RoleCatalog',
-                filterProperty: 'roleId',
-                dispalyProprty: 'catalogId'
-            },
-            {
-                id: 'idGroupList',
-                type: 'group',
-                bindingPath: '/RoleGroup',
-                filterProperty: 'roleId',
-                dispalyProprty: 'groupId'
-            },
-            {
-                id: 'idUserList',
-                type: 'user',
-                bindingPath: '/RoleUser',
-                filterProperty: 'roleId',
-                dispalyProprty: 'userId'
-            }
-        ],
 
         onInit: function () {
             this.getRouter().getRoute('Details').attachPatternMatched(this._onRouteMatch, this);
@@ -62,7 +39,7 @@ sap.ui.define([
             var sDialogName = oSource.data('dialogName');
             var sListId = oSource.data('listId');
             var oBinding = this.byId(sListId).getBinding('items');
-            var oBindingContext = oBinding.create({ roleId: this.roleId });
+            var oBindingContext = oBinding.create({ roleId: this.roleId }, true, { groupId: sListId });
             var oDialog = await this.getDialog(sDialogName);
 
             oDialog.bindElement(oBindingContext.getPath());
@@ -74,6 +51,27 @@ sap.ui.define([
             var oDialog = oSource.getParent();
 
             oDialog.close();
+        },
+
+        onDelete: function(oEvent) {
+            var oSource = oEvent.getSource();
+            var sListId = oSource.data('listId');
+            var oSelectedItems = this.byId(sListId).getSelectedItems();
+            var aPaths = oSelectedItems.map(function(oSelectedItem) { return oSelectedItem.getBindingContext().getPath(); });
+            var oDeletetionPromise = this.models.remove.call(this, aPaths);
+
+            oDeletetionPromise.then(() =>  sap.m.MessageToast.show('Entries have beed deleted successfull'));
+        },
+
+        onDeleteRole: function(oEvent) {
+            var oBindingContext = this.getView().getBindingContext();
+            var sPath = oBindingContext.getPath();
+            var oDeletionPromise = this.models.remove.call(this, sPath);
+
+            oDeletionPromise.then(function() {
+                this.getRouter().navTo('Overview');
+                sap.m.MessageToast.show('Role has beed deleted successfull');
+            }.bind(this));
         },
 
         onCancel: function(oEvent) {
@@ -90,20 +88,9 @@ sap.ui.define([
         },
 
         onSave: function(oEvent) {
-            var oModel = this.getModel();
+            var oSubmitPromise = this.models.submitChanges.call(this);
 
-            if(oModel.hasPendingChanges()) {
-                this.getModel().submitChanges({
-                    success: function(oResponse) {
-                        this.getView().getModel('view').setProperty('/isEdit', false);
-    
-                        sap.m.MessageToast.show('Role has beed saved successfull');
-                    }.bind(this),
-                    error: function(oResponse) {
-    
-                    }.bind(this)
-                });
-            }
+            oSubmitPromise.then(() => this.getView().getModel('view').setProperty('/isEdit', false));
         },
 
         onSuggest: function (oEvent) {

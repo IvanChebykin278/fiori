@@ -36,7 +36,7 @@
                 <smartTable:customToolbar>
                     <Toolbar>
                         <ToolbarSpacer />
-                        <Button icon="sap-icon://add" text="Insert" press="onOpenInsertDialog">
+                        <Button icon="sap-icon://add" type="Emphasized" text="Insert" press="onOpenInsertDialog">
                             <customData>
                                 <core:CustomData key="dialogName" value="InsertRoleDialog" />
                             </customData>
