@@ -1,0 +1,5 @@
+<mvc:View controllerName="fiori.actions.controller.Overview"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page title="Actions"/>
+</mvc:View>
