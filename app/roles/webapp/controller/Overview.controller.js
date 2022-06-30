@@ -22,21 +22,14 @@ sap.ui.define([
             var oSource = oEvent.getSource();
             var oDialog = oSource.getParent();
             var oProperty = oSource.getBindingContext().getProperty();
+            var oSubmitPromise = this.models.submitChanges.call(this, { groupId: 'roles' });
 
-            this.getModel().submitChanges({
-                groupId: 'roles',
-                success: function(oResponse) {
-                    this.getRouter().navTo('Details', {
-                        path: oProperty.ID
-                    });
+            oSubmitPromise.then(() => {
+                this.getRouter().navTo('Details', {
+                    path: oProperty.ID
+                });
 
-                    sap.m.MessageToast.show('Role has beed inserted successfull');
-                    
-                    oDialog.close();
-                }.bind(this),
-                error: function(oResponse) {
-
-                }.bind(this)
+                oDialog.close();
             });
         },
 
@@ -45,7 +38,7 @@ sap.ui.define([
             var oDialog = oSource.getParent();
             var sPath = oDialog.getBindingContext().getPath();
 
-            this.getModel().resetChanges([ sPath ], undefined, true);
+            this.models.resetChanges.call(this, [ sPath ], undefined, true);
             oDialog.close();
         },
 
