@@ -19,9 +19,10 @@
 				</snappedTitleOnMobile>
 
 				<actions>
-					<m:Button type="Emphasized" text="Edit" enabled="{= !${isReadOnly}}" visible="{= !${view>/isEdit}}" press="onEdit"/>
-                    <m:Button type="Emphasized" text="Save" enabled="{= !${isReadOnly}}" visible="{= ${view>/isEdit}}" press="onSave"/>
-					<m:Button text="Delete" enabled="{= !${isReadOnly}}" press="onDeleteRole"/>
+					<m:Button type="Emphasized" text="Edit" enabled="{= !${isReadOnly}}" visible="{= !${view>/isEdit}}" press="onEditRole"/>
+                    <m:Button type="Emphasized" text="Save" enabled="{= !${isReadOnly}}" visible="{= ${view>/isEdit}}" press="onSaveRole"/>
+                    <m:Button text="Cancel" enabled="{= !${isReadOnly}}" visible="{= ${view>/isEdit}}" press="onCancelRole"/>
+					<m:Button text="Delete" enabled="{= !${isReadOnly}}" visible="{= !${view>/isEdit}}" press="onDeleteRole"/> 
 				</actions>
 			</ObjectPageDynamicHeaderTitle>
 		</headerTitle>

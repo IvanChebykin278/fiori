@@ -10,3 +10,8 @@ annotate db.SemanticObjects with {
     semanticObject  @title  :   'Semantic object';
     isReadOnly      @title  :   'Read-Only';
 };
+
+annotate db.Actions with {
+    action      @title  :   'Action Name';
+    isReadOnly  @title  :   'Read-Only';
+};

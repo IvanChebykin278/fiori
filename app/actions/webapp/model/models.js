@@ -58,7 +58,7 @@ sap.ui.define([
                         oModel.submitChanges({
                             groupId: oParameters ? oParameters.groupId : undefined,
                             success: oResponse => {
-                                sap.m.MessageToast.show('Entry/Entries has beed saved successfull');
+                                sap.m.MessageToast.show('Action has beed saved successfull');
 
                                 resolve(oResponse);
                             },
@@ -68,14 +68,6 @@ sap.ui.define([
                         resolve();
                     }
                 });
-            },
-
-            resetChanges: function() {
-                var oModel = this.getModel();
-
-                if(oModel.hasPendingChanges()) {
-                    oModel.resetChanges.apply(oModel, arguments);
-                }
             }
         };
 });

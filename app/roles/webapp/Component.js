@@ -1,9 +1,10 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "fiori/roles/model/models"
+        "fiori/roles/model/models",
+        "fiori/roles/controller/ErrorHandler"
     ],
-    function (UIComponent, Device, models) {
+    function (UIComponent, Device, models, ErrorHandler) {
         "use strict";
 
         return UIComponent.extend("fiori.roles.Component", {
@@ -26,6 +27,8 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+                
+                this.oErrorHandler = new ErrorHandler(this);
 
                 oModel.setDeferredGroups(["roles", "idCatalogList", "idGroupList", "idUserList"]);
                 oModel.setChangeGroups({

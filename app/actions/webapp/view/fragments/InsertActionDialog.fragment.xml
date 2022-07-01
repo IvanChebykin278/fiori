@@ -1,0 +1,40 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core">
+	<Dialog
+		class="sapUiSizeCompact"
+		title="{i18n>Insert} action">
+		<customData>
+			<core:CustomData key="dialogName" value="InsertActionDialog" />
+		</customData>
+		<content>
+			<f:SimpleForm id="idInsertForm"
+				editable="true"
+				layout="ResponsiveGridLayout"
+				labelSpanXL="4"
+				labelSpanL="4"
+				labelSpanM="4"
+				labelSpanS="12"
+				adjustLabelSpan="false"
+				emptySpanXL="1"
+				emptySpanL="1"
+				emptySpanM="1"
+				emptySpanS="0"
+				columnsXL="1"
+				columnsL="1"
+				columnsM="1"
+				singleContainerFullSize="false" >
+				<f:content>
+					<Label text="Action name" required="true" />
+					<Input name="action" value="{action}" />
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<buttons>
+			<Button text="{i18n>Insert}" press="onInsert" />
+			<Button text="{i18n>Cancel}" press="onCancel" />
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

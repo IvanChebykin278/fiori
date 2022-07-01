@@ -55,8 +55,8 @@ entity SemanticObjects : managed, cuid {
     isReadOnly: Boolean default false;
 }
 
-entity Actions : managed {
-    key action : String;
+entity Actions : managed, cuid {
+    action : String;
     isReadOnly: Boolean default false;
 }
 

@@ -36,6 +36,17 @@
                             "Administrator",
                             "User"
                         ]
+                    },
+                    "1": {
+                        "password": "1",
+                        "ID": "1",
+                        "userAttributes": {
+                            "email": "ivan.chebykin@sap.com"
+                        },
+                        "roles": [
+                            "Administrator",
+                            "User"
+                        ]
                     }
                 }
             }

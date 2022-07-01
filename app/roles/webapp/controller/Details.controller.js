@@ -30,6 +30,11 @@ sap.ui.define([
             this.getView().bindElement("/Roles('" + this.roleId + "')", {
                 parameters: {
                     expand: 'users,catalogs,groups'
+                },
+                events: {
+                    dataRequested: (oEvent) => {
+                        debugger;
+                    }
                 }
             });
         },
@@ -79,18 +84,23 @@ sap.ui.define([
             var oDialog = oSource.getParent();
             var sPath = oDialog.getBindingContext().getPath();
 
-            this.getModel().resetChanges([ sPath ], undefined, true);
+            this.models.resetChanges.call(this, [ sPath ], undefined, true);
             oDialog.close();
         },
 
-        onEdit: function(oEvent) {
+        onEditRole: function(oEvent) {
             this.getView().getModel('view').setProperty('/isEdit', true);
         },
 
-        onSave: function(oEvent) {
+        onSaveRole: function(oEvent) {
             var oSubmitPromise = this.models.submitChanges.call(this);
 
             oSubmitPromise.then(() => this.getView().getModel('view').setProperty('/isEdit', false));
+        },
+
+        onCancelRole: function(oEvent) {
+            this.models.resetChanges.call(this, undefined, true, true);
+            this.getView().getModel('view').setProperty('/isEdit', false)
         },
 
         onSuggest: function (oEvent) {
