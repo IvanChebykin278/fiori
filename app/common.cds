@@ -5,3 +5,8 @@ annotate db.Roles with {
     desc        @title  :   'Description';
     isReadOnly  @title  :   'Read-Only';
 };
+
+annotate db.SemanticObjects with {
+    semanticObject  @title  :   'Semantic object';
+    isReadOnly      @title  :   'Read-Only';
+};

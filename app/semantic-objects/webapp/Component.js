@@ -1,9 +1,10 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "fiori/semanticobjects/model/models"
+        "fiori/semanticobjects/model/models",
+        "fiori/semanticobjects/controller/ErrorHandler"
     ],
-    function (UIComponent, Device, models) {
+    function (UIComponent, Device, models, ErrorHandler) {
         "use strict";
 
         return UIComponent.extend("fiori.semanticobjects.Component", {
@@ -25,6 +26,8 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+
+                this.oErrorHandler = new ErrorHandler(this);
             }
         });
     }

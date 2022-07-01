@@ -25,6 +25,17 @@
                             "Administrator",
                             "User"
                         ]
+                    },
+                    "test@test.test": {
+                        "password": "111",
+                        "ID": "test",
+                        "userAttributes": {
+                            "email": "test@test.test"
+                        },
+                        "roles": [
+                            "Administrator",
+                            "User"
+                        ]
                     }
                 }
             }

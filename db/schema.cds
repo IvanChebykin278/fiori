@@ -50,8 +50,8 @@ entity TargetMappings : managed {
     isReadOnly: Boolean default false;
 }
 
-entity SemanticObjects : managed {
-    key semanticObject : String;
+entity SemanticObjects : managed, cuid {
+    semanticObject : String;
     isReadOnly: Boolean default false;
 }
 

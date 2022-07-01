@@ -13,21 +13,21 @@
                 id="idSmartFilterBar" 
                 entitySet="SemanticObjects" 
                 persistencyKey="SmartFilter_Explored" 
-                basicSearchFieldName="ID" 
+                basicSearchFieldName="semanticObject" 
                 enableBasicSearch="true" >
 				<smartFilterBar:layoutData>
 					<FlexItemData shrinkFactor="0"/>
 				</smartFilterBar:layoutData>
 			</smartFilterBar:SmartFilterBar>
 			<smartTable:SmartTable 
-                id="idSmartTable" 
+                id="idSmartTable1" 
                 entitySet="SemanticObjects" 
                 smartFilterId="idSmartFilterBar" 
                 useExportToExcel="false" 
                 beforeExport="onBeforeExport" 
                 useVariantManagement="false" 
                 useTablePersonalisation="true" 
-                header="{i18n>SemanticObjects}" 
+                header="SemanticObjects" 
                 showRowCount="true" 
                 persistencyKey="SmartTableAnalytical_Explored" 
                 enableAutoBinding="true" 
@@ -36,25 +36,15 @@
                 <smartTable:customToolbar>
                     <Toolbar>
                         <ToolbarSpacer />
-                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>InsertSemanticObject}" press="onOpenInsertDialog">
-                            <customData>
-                                <core:CustomData key="dialogName" value="InsertSemanticObjectDialog" />
-                            </customData>
-                        </Button>
-                        <Button icon="sap-icon://edit" type="Emphasized" enabled="{SelectedItem>/isSelected}" text="{i18n>EditSemanticObject}" press="onEditInsertDialog">
-                            <customData>
-                                <core:CustomData key="dialogName" value="EditSemanticObjectDialog" />
-                            </customData>
-                        </Button>
-                        <Button icon="sap-icon://delete" type="Emphasized" text="{i18n>DeleteSemanticObject}" enabled="{SelectedItem>/isSelected}" press="onDeleteDialog">
+                        <Button icon="sap-icon://add" type="Emphasized" text="Insert" press="onOpenInsertDialog">
                             <customData>
                                 <core:CustomData key="dialogName" value="InsertRoleDialog" />
                             </customData>
                         </Button>
                     </Toolbar>
                 </smartTable:customToolbar>
-                <Table id="semanticObjectsTable" mode="SingleSelectMaster" selectionChange="selectionChange">
-                    <!--<ColumnListItem type="Navigation" press="onNavToDetails" />-->
+                <Table mode="None">
+                    <ColumnListItem type="Navigation" press="onNavToDetails" />
                 </Table>
 				<smartTable:layoutData>
 					<FlexItemData growFactor="1" baseSize="0%"/>

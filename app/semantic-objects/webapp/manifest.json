@@ -17,11 +17,10 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/",
+        "uri": "/v2/service/PageBuilder",
         "type": "OData",
         "settings": {
           "annotations": [],
-          "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
       },
@@ -80,7 +79,10 @@
       "": {
         "dataSource": "mainService",
         "preload": true,
-        "settings": {}
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultUpdateMethod": "Put"
+        }
       },
       "pageBuilder": {
         "dataSource": "pageBuilderService",
