@@ -51,12 +51,12 @@ entity TargetMappings : managed {
 }
 
 entity SemanticObjects : managed {
-    key semanticObject : String;
+    semanticObject : String;
     isReadOnly: Boolean default false;
 }
 
-entity Actions : managed {
-    key action : String;
+entity Actions : managed, cuid {
+    action : String;
     isReadOnly: Boolean default false;
 }
 

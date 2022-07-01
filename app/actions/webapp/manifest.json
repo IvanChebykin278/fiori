@@ -17,11 +17,10 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/sap/opu/odata/",
+        "uri": "/v2/service/PageBuilder",
         "type": "OData",
         "settings": {
           "annotations": [],
-          "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
       },
@@ -74,21 +73,15 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "fiori.roles.i18n.i18n"
+          "bundleName": "fiori.actions.i18n.i18n"
         }
       },
       "": {
         "dataSource": "mainService",
         "preload": true,
         "settings": {
-          "defaultBindingMode": "TwoWay"
-        }
-      },
-      "pageBuilder": {
-        "dataSource": "pageBuilderService",
-        "preload": true,
-        "settings": {
-          "defaultBindingMode": "OneWay"
+          "defaultBindingMode": "TwoWay",
+          "defaultUpdateMethod": "MERGE"
         }
       }
     },
