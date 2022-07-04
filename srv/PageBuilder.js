@@ -38,7 +38,7 @@ module.exports = async (srv) => {
     });
 
     srv.before(['DELETE', 'UPDATE'], '*', async (req) => {
-        const deletedEntry = await SELECT.one().from(req.target.name).where(req.data);
+        const deletedEntry = await SELECT.one().from(req.target.name).where({ ID: req.data.ID });
 
         if (deletedEntry.isReadOnly) {
             return req.reject(409, 'Entry is Read-Only');
