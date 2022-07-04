@@ -14,6 +14,39 @@
                             "Administrator",
                             "User"
                         ]
+                    },
+                    "mikhail.postnikov@sap.com": {
+                        "password": "initial",
+                        "ID": "mikhail.postnikov@sap.com",
+                        "userAttributes": {
+                            "email": "mikhail.postnikov@sap.com"
+                        },
+                        "roles": [
+                            "Administrator",
+                            "User"
+                        ]
+                    },
+                    "test@test.test": {
+                        "password": "111",
+                        "ID": "test",
+                        "userAttributes": {
+                            "email": "test@test.test"
+                        },
+                        "roles": [
+                            "Administrator",
+                            "User"
+                        ]
+                    },
+                    "1": {
+                        "password": "1",
+                        "ID": "1",
+                        "userAttributes": {
+                            "email": "ivan.chebykin@sap.com"
+                        },
+                        "roles": [
+                            "Administrator",
+                            "User"
+                        ]
                     }
                 }
             }

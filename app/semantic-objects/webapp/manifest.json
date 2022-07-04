@@ -1,0 +1,138 @@
+{
+  "_version": "1.40.0",
+  "sap.app": {
+    "id": "fiori.semanticobjects",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap-ux/fiori-freestyle-writer:basic",
+      "version": "0.11.15",
+      "toolsId": "f7b315b1-6dde-4ec1-9628-094241fc7e87"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/v2/service/PageBuilder",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0"
+        }
+      },
+      "pageBuilderService": {
+        "uri": "/v2/service/PageBuilder",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.102.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "fiori.semanticobjects.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultUpdateMethod": "Put"
+        }
+      },
+      "pageBuilder": {
+        "dataSource": "pageBuilderService",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "OneWay"
+        }
+      } 
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "fiori.semanticobjects.view",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "Overview",
+          "pattern": ":?query:",
+          "target": [
+            "Overview"
+          ]
+        }
+      ],
+      "targets": {
+        "Overview": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Overview",
+          "viewName": "Overview"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "fiori.semanticobjects.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  }
+}
