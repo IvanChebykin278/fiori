@@ -16,8 +16,6 @@ sap.ui.define(
               var oParams = oEvent.getParameters();
               
               this.showServiceError(oParams.response);
-              
-              sap.ui.core.BusyIndicator.hide();
             }, this);
   
             this._oModel.attachRequestFailed(function (oEvent) {

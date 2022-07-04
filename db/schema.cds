@@ -31,6 +31,7 @@ entity CatalogTile : managed {
     key tileId : Integer not null;
     isReferense : Boolean default false;
     refererId : Integer default null;
+    isReadOnly: Boolean default false;
 
     referer : Association to one CatalogTile on referer.tileId = tileId;
     tile : Association to one Tiles on tile.ID = tileId;
@@ -50,13 +51,13 @@ entity TargetMappings : managed {
     isReadOnly: Boolean default false;
 }
 
-entity SemanticObjects : managed {
-    key semanticObject : String;
+entity SemanticObjects : managed, cuid {
+    semanticObject : String;
     isReadOnly: Boolean default false;
 }
 
-entity Actions : managed {
-    key action : String;
+entity Actions : managed, cuid {
+    action : String;
     isReadOnly: Boolean default false;
 }
 
@@ -72,6 +73,7 @@ entity Groups : managed {
 entity GroupTile : managed {
     key tileId : Integer;
     key groupId : String;
+    isReadOnly: Boolean default false;
 
     tile : Association to one Tiles on tile.ID = tileId;
     group : Association to one Groups on group.ID = groupId;
@@ -90,6 +92,7 @@ entity Roles : managed {
 entity RoleGroup : managed {
     key roleId : String;
     key groupId : String;
+    isReadOnly: Boolean default false;
 
     role : Association to one Roles on role.ID = roleId;
     group : Association to one Groups on group.ID = groupId;
@@ -98,6 +101,7 @@ entity RoleGroup : managed {
 entity RoleCatalog : managed {
     key roleId : String;
     key catalogId : String;
+    isReadOnly: Boolean default false;
 
     role : Association to one Roles on role.ID = roleId;
     catalog : Association to one Catalogs on catalog.ID = catalogId;
@@ -106,6 +110,7 @@ entity RoleCatalog : managed {
 entity RoleUser : managed {
     key roleId : String;
     key userId : String;
+    isReadOnly: Boolean default false;
 
     role : Association to one Roles on role.ID = roleId;
 }
