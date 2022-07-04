@@ -46,7 +46,8 @@ module.exports = async (srv) => {
     });
 
     srv.on('DELETE', ['Actions', 'SemanticObjects'], async (req) => {
-        const { ID, ...data } = req.data;
+        const entry = await SELECT.one().from(req.target.name).where(req.data);
+        const { ID, createdAt, createdBy, modifiedAt, modifiedBy, ...data } = entry;
         const targetMapping = await SELECT.one().from(TargetMappings).where(data);
 
         if (targetMapping) {
