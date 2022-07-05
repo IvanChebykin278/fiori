@@ -1,17 +1,17 @@
 using fiori as db from '../db/schema';
 
 annotate db.Roles with {
-    ID          @title  :   'Role ID';
-    desc        @title  :   'Description';
-    isReadOnly  @title  :   'Read-Only';
+    ID          @title  :   '{i18n>ID}';
+    desc        @title  :   '{i18n>desc}';
+    isReadOnly  @title  :   '{i18n>isReadOnly}';
 };
 
 annotate db.SemanticObjects with {
-    semanticObject  @title  :   'Semantic object';
-    isReadOnly      @title  :   'Read-Only';
+    semanticObject  @title  :   '{i18n>semanticObject}';
+    isReadOnly      @title  :   '{i18n>isReadOnly}';
 };
 
 annotate db.Actions with {
-    action      @title  :   'Action Name';
-    isReadOnly  @title  :   'Read-Only';
+    action      @title  :   '{i18n>action}';
+    isReadOnly  @title  :   '{i18n>isReadOnly}';
 };
