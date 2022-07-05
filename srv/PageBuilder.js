@@ -4,6 +4,12 @@ module.exports = async (srv) => {
     const db = await cds.connect.to('db');
     const { Actions, Catalogs, Groups, SemanticObjects, TargetMappings, Tiles, CatalogTile } = db.entities();
 
+    srv.before(['DELETE', 'UPDATE', 'CREATE'], '*', async (req) => {
+        if(req.req.url.indexOf('simulate=error') >= 0) {
+            return req.reject(500, `This is a auto-genereted error for debugging`);
+        }
+    });
+
     srv.on('getActionControl', async req => {
         const { catalogId, tileId } = req.data;
         const catalog = await SELECT.one().from(Catalogs).where({ ID: catalogId });
