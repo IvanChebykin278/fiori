@@ -18,6 +18,12 @@ sap.ui.define([
              * @override
              */
             init: function () {
+                var oMessageManager = sap.ui.getCore().getMessageManager();
+                var oModel = this.getModel();
+
+                // register message processor
+                oMessageManager.registerMessageProcessor(oModel);
+
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
 

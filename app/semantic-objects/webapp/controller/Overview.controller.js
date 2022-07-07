@@ -2,41 +2,32 @@ sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageBox",
-    'jquery.sap.global'
-],  function (BaseController, JSONModel, MessageBox, Jquery) {
+    "sap/ui/core/library"
+],  function (BaseController, JSONModel, MessageBox, library) {
         "use strict";
 
         return BaseController.extend("fiori.semanticobjects.controller.Overview", {
 
             onInit: function () {
-
                 var oData = {
-                    data: null,
-                    bindingContextPath: null,
-                    isSelected: false
+                    selectedSemanticObject: {
+                        data: null,
+                        bindingContextPath: null,
+                        isSelected: false
+                    }
                 };
                 var oModel = new JSONModel(oData);
-                this.getView().setModel(oModel, "SelectedItem");
+                this.getView().setModel(oModel, "view");
                 
             },
 
-
-            // Почему jquery не отрабатывается?
-            // onAfterRendering: function() {
-            //     var that = this;
-            //     var oPage = this.getView().byId("idOverviewPage");
-            //     $('#' + oPage.getId()).on("click", function() {
-            //       console.log("test");
-            //       var oTable = that.getView().byId("semanticObjectsTable");
-            //       oTable.removeSelections(true);
-            //     });
-            // },
-
-            selectionChange: function(oEvent) {
+            onSelectionChange: function(oEvent) {
                 var oSelectedItem = oEvent.getParameter("listItem");
-                var oSelectedProperty = oSelectedItem.getBindingContext().getProperty();
-                var sSelectedPath = oSelectedItem.getBindingContext().getPath();
-                this.getModel("SelectedItem").setData({
+                var oBindingContext = oSelectedItem.getBindingContext();
+                var oSelectedProperty = oBindingContext.getProperty();
+                var sSelectedPath = oBindingContext.getPath();
+
+                this.getModel("view").setProperty("/selectedSemanticObject", {
                     data: oSelectedProperty,
                     bindingContextPath: sSelectedPath,
                     isSelected: true
@@ -54,14 +45,9 @@ sap.ui.define([
             },
 
             onEditInsertDialog : async function(oEvent){
-                // var fragmentId = this.getView().createId("sDialogName");
-                // var oInput = Fragment.byId(fragmentId, "semanticObjectEdit");
-                // var sSemanticObject = this.getModel('SelectedItem').getProperty("/data/semanticObject")
-                // oInput.setValue(sSemanticObject);
                 var sDialogName = oEvent.getSource().data('dialogName');
                 var oDialog = await this.getDialog(sDialogName);
-
-                var sPath =  this.getModel("SelectedItem").getData().bindingContextPath;
+                var sPath =  this.getModel("view").getProperty("/selectedSemanticObject/bindingContextPath");
 
                 oDialog.bindElement(sPath);
                 oDialog.open();
@@ -76,89 +62,99 @@ sap.ui.define([
                 oDialog.close();
             },
 
-            onInsert: function(oEvent) {
+            _changeSemanticObjectEntity : function(oEvent, sMessage){
                 var oSource = oEvent.getSource();
                 var oDialog = oSource.getParent();
-                var oProperty = oSource.getBindingContext().getProperty();
-                var i18n = this.getView().getModel("i18n").getResourceBundle()
+                var oBindingContext = oDialog.getBindingContext();
+                var oModel = oBindingContext.getModel();
+                var semanticObjectInsertSccsess = this.getResourceBundle().getText(sMessage);
 
                 this.getModel().submitChanges({
                     success: function(oResponse) {
 
-                        // this.getRouter().navTo('Details', {
-                        //     path: oProperty.ID
-                        // });
+                        // (function recursion (array,index){
+                        //     var item = array[index];
+                        //     var test = oResponse;
+                        //     if (!item){
+                        //         sap.m.MessageToast.show(semanticObjectInsertSccsess);
+                        //         return;
+                        //     };
+                        //     if (item.__changeResponses && Array.isArray(item.__changeResponses)){
+                        //         return recursion.call(this, item.__changeResponses,0);    
+                        //     };
+                        //     if (item.response && item.response.statusCode && item.response.statusCode.indexOf('2') != 0 ){
+                        //         this.getModel().resetChanges();
+                        //         return
+                        //     };
+                        //     recursion.call(this, array,index+1);
+                        // }.bind(this))(oResponse.__batchResponses,0); 
                         
-                        sap.m.MessageToast.show(i18n.getText("semanticObjectInsertSccsess"));
+                        // oDialog.close();
+                        // //Возникает ошибка, если есть рефреш
+                        // this.getModel().refresh();
+                        // this._removeSelection();
+
+                        // var oMessageManager = sap.ui.getCore().getMessageManager();
+                        // var oModel = this.getModel();
+                        // var aMessages = oModel.getMessages(oDialog.getBindingContext());
+
+                        // oMessageManager.addMessages(aMessages);
+
+                        var aMessages = oModel.getMessages(oBindingContext);
+
+                        for(var oMessage in aMessages) {
+                            var isCorrectTarget = oMessage.getTarget() === oBindingContext.getPath() + "/semanticObject";
+                            var isError = oMessage.getType() === library.MessageType.Error;
+
+                            if(isCorrectTarget && isError) {
+                                return;
+                            }
+                        }
                         
+                        sap.m.MessageToast.show(semanticObjectInsertSccsess);
                         oDialog.close();
+
                     }.bind(this),
                     error: function(oResponse) {
-    
+                        //Должен вылетать месседж тоаст с ошибкой
+                        // oResponse.message.value
                     }.bind(this)
-                });
-                
-                this.getView().byId("semanticObjectsTable").removeSelections(true);
-                this.getModel("SelectedItem").setData({
-                    data: null,
-                    bindingContextPath: null,
-                    isSelected: false
                 });
             },
 
+            onInsert: function(oEvent) {
+                this._changeSemanticObjectEntity(oEvent, "semanticObjectInsertSccsess");
+            },
+
             onEdit: function(oEvent) {
-                var oSource = oEvent.getSource();
-                var oDialog = oSource.getParent();
-                var sPath =  this.getModel("SelectedItem").getData().bindingContextPath;
-                var oData = this.getModel().getObject(sPath);
-                var i18n = this.getView().getModel("i18n").getResourceBundle()
-
-                this.getModel().submitChanges({
-                    //groupId: 'roles',
-                    success: function(oResponse) {
-
-                        // this.getRouter().navTo('Details', {
-                        //     path: oProperty.ID
-                        // });
-    
-                        sap.m.MessageToast.show(i18n.getText("semanticObjectEditedSccsess"));
-                        
-                        oDialog.close();
-                    }.bind(this),
-                    error: function(oResponse) {
-    
-                    }.bind(this)
-                });
-
-                this.getView().byId("semanticObjectsTable").removeSelections(true);
-                this.getModel("SelectedItem").setData({
-                    data: null,
-                    bindingContextPath: null,
-                    isSelected: false
-                });
+                this._changeSemanticObjectEntity(oEvent, "semanticObjectEditedSccsess");
             },
 
 
             onDeleteDialog : function(oEvent){
                 
-                var sPath =  this.getModel("SelectedItem").getData().bindingContextPath;
-                var i18n = this.getView().getModel("i18n").getResourceBundle()
+                var sPath =  this.getModel("view").getProperty("/selectedSemanticObject/bindingContextPath");
+                var sWarningMessage = this.getResourceBundle().getText("deletSematicObjectMessageBoxTitile");
+                var sSemanticObjectDeleteSccsess = this.getResourceBundle().getText("semanticObjectDeleteSccsess");
             
-                MessageBox.warning(i18n.getText("deletSematicObjectMessageBoxTitile"), {
+                MessageBox.warning(sWarningMessage, {
                     actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                     emphasizedAction: MessageBox.Action.OK,
 
                     onClose: function (sAction) {
-                        if (sAction == "OK"){
+                        if (sAction === "OK"){
 
                             this.getModel().remove(sPath, {
                                 success: function(oResponse) {
             
-                                    sap.m.MessageToast.show(i18n.getText("semanticObjectDeleteSccsess"));
+                                    sap.m.MessageToast.show(sSemanticObjectDeleteSccsess);
+                                    this._removeSelection();
 
                                 }.bind(this),
                                 error: function(oResponse) {
-                
+                                    //Должен вылетать месседж тоаст с ошибкой
+                                    //oResponse.message.value
+                                    this.getModel().refresh(true);
                                 }.bind(this)
                             });
                         }
@@ -166,6 +162,14 @@ sap.ui.define([
                 }) 
             },
             
+            _removeSelection : function(){
+                this.getView().byId("semanticObjectsTable").removeSelections(true);
+                this.getModel("view").setProperty("/selectedSemanticObject", {
+                    data: null,
+                    bindingContextPath: null,
+                    isSelected: false
+                });
+            }
 
         });
     });

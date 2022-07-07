@@ -6,7 +6,12 @@ module.exports = async (srv) => {
 
     srv.before(['DELETE', 'UPDATE', 'CREATE'], '*', async (req) => {
         if(req.req.url.indexOf('simulate=error') >= 0) {
-            return req.reject(500, `This is a auto-genereted error for debugging`);
+            return req.error({
+                code: 'some_code',
+                message: 'This is a auto-genereted error for debugging',
+                target: 'semanticObject',
+                status: 418
+            });
         }
     });
 

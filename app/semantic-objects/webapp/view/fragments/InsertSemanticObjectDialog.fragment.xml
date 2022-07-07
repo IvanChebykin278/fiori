@@ -6,9 +6,6 @@
 	<Dialog
 		class="sapUiSizeCompact"
 		title="{i18n>InsertSemanticObjectFragmentTitle}">
-		<customData>
-			<core:CustomData key="dialogName" value="InsertSemanticObjectDialog" />
-		</customData>
 		<content>
 			<f:SimpleForm id="idInsertForm"
 				editable="true"
@@ -28,13 +25,13 @@
 				singleContainerFullSize="false" >
 				<f:content>
 					<Label text="{i18n>SemanticNameObject}" required="true" />
-					<Input name="semanticObject" value="{semanticObject}" />
+					<Input name="insertSemanticObject" value="{semanticObject}" showValueStateMessage="true" />
 				</f:content>
 			</f:SimpleForm>
 		</content>
 		<buttons>
-			<Button text="{i18n>InsertButton}" press="onInsert" />
-			<Button text="{i18n>CancelButton}" press="onCancel" />
+			<Button type="Emphasized" text="{i18n>InsertButton}" press="onInsert" />
+			<Button type="Ghost" text="{i18n>CancelButton}" press="onCancel" />
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

@@ -6,9 +6,6 @@
 	<Dialog
 		class="sapUiSizeCompact"
 		title="{i18n>EditSemanticObjectFragmentTitle}">
-		<customData>
-			<core:CustomData key="dialogName" value="EditSemanticObjectDialog" />
-		</customData>
 		<content>
 			<f:SimpleForm id="idEditForm"
 				editable="true"
@@ -28,13 +25,13 @@
 				singleContainerFullSize="false" >
 				<f:content>
 					<Label text="{i18n>SemanticNameObject}" required="true" />
-					<Input name="semanticObject" id="semanticObjectEdit" value="{semanticObject}" />
+					<Input name="editSemanticObject" id="semanticObjectEdit" value="{semanticObject}" />
 				</f:content>
 			</f:SimpleForm>
 		</content>
 		<buttons>
-			<Button text="{i18n>EditButton}" press="onEdit" />
-			<Button text="{i18n>CancelButton}" press="onCancel" />
+			<Button type="Emphasized" text="{i18n>EditButton}" press="onEdit" />
+			<Button type="Ghost" text="{i18n>CancelButton}" press="onCancel" />
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

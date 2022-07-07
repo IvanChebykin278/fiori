@@ -15,26 +15,34 @@ sap.ui.define(
             this._oModel.attachMetadataFailed(function (oEvent) {
               var oParams = oEvent.getParameters();
 
-              this.showServiceError(oParams.response);
+              this.showServiceError(oParams.response, oParams.response.message);
 
               sap.ui.core.BusyIndicator.hide();
             }, this);
 
-            this._oModel.attachRequestFailed(function (oEvent) {
-              var oParams = oEvent.getParameters();
-              // An entity that was not found in the service is also throwing a 404 error in oData.
-              // We already cover this case with a notFound target so we skip it here.
-              // A request that cannot be sent to the server is a technical error that we have to handle though
-              if (
-                oParams.response.statusCode !== "404" ||
-                (oParams.response.statusCode === 404 &&
-                  oParams.response.responseText.indexOf("Cannot POST") === 0)
-              ) {
-                this.showServiceError(oParams.response);
-              }
+            // this._oModel.attachRequestFailed(function (oEvent) {
+            //   var oParams = oEvent.getParameters();
+            //   var vResponseText;
 
-              sap.ui.core.BusyIndicator.hide();
-            }, this);
+            //   try {
+            //     vResponseText = JSON.parse(oParams.response.responseText).error;
+            //   } catch {
+            //     vResponseText = oParams.response.message;
+            //   }
+
+            //   // An entity that was not found in the service is also throwing a 404 error in oData.
+            //   // We already cover this case with a notFound target so we skip it here.
+            //   // A request that cannot be sent to the server is a technical error that we have to handle though
+            //   if (
+            //     oParams.response.statusCode !== "404" ||
+            //     (oParams.response.statusCode === 404 &&
+            //       oParams.response.responseText.indexOf("Cannot POST") === 0)
+            //   ) {
+            //     this.showServiceError(oParams.response.responseText, vResponseText.message ? vResponseText.message.value : vResponseText);
+            //   }
+              
+            //   sap.ui.core.BusyIndicator.hide();
+            // }, this);
         },
 
         /**
@@ -43,15 +51,16 @@ sap.ui.define(
          * @param {string} sDetails a technical error to be displayed on request
          * @private
          */
-        showServiceError: function (sDetails) {
+        showServiceError: function (sDetails, errorMessage) {
           if (this._bMessageOpen) {
             return;
           }
           this._bMessageOpen = true;
-          MessageBox.error(this._sErrorText, {
+          MessageBox.error(errorMessage, {
             id: "serviceErrorMessageBox",
+            icon: sap.m.MessageBox.Icon.ERROR,
+            title: this._sErrorText,
             details: sDetails,
-            styleClass: this._oComponent.getContentDensityClass(),
             actions: [MessageBox.Action.CLOSE],
             onClose: function () {
               this._bMessageOpen = false;
