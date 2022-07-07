@@ -58,7 +58,8 @@ sap.ui.define([
                 var oDialog = oSource.getParent();
                 var sPath = oDialog.getBindingContext().getPath();
     
-                this.getModel().resetChanges([ sPath ], undefined, true);
+                this.getModel().resetChanges();
+                this.getModel().refresh(true);
                 oDialog.close();
             },
 
@@ -71,34 +72,6 @@ sap.ui.define([
 
                 this.getModel().submitChanges({
                     success: function(oResponse) {
-
-                        // (function recursion (array,index){
-                        //     var item = array[index];
-                        //     var test = oResponse;
-                        //     if (!item){
-                        //         sap.m.MessageToast.show(semanticObjectInsertSccsess);
-                        //         return;
-                        //     };
-                        //     if (item.__changeResponses && Array.isArray(item.__changeResponses)){
-                        //         return recursion.call(this, item.__changeResponses,0);    
-                        //     };
-                        //     if (item.response && item.response.statusCode && item.response.statusCode.indexOf('2') != 0 ){
-                        //         this.getModel().resetChanges();
-                        //         return
-                        //     };
-                        //     recursion.call(this, array,index+1);
-                        // }.bind(this))(oResponse.__batchResponses,0); 
-                        
-                        // oDialog.close();
-                        // //Возникает ошибка, если есть рефреш
-                        // this.getModel().refresh();
-                        // this._removeSelection();
-
-                        // var oMessageManager = sap.ui.getCore().getMessageManager();
-                        // var oModel = this.getModel();
-                        // var aMessages = oModel.getMessages(oDialog.getBindingContext());
-
-                        // oMessageManager.addMessages(aMessages);
 
                         var aMessages = oModel.getMessages(oBindingContext);
 

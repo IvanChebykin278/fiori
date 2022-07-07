@@ -83,7 +83,8 @@
         "settings": {
           "defaultBindingMode": "TwoWay",
           "serviceUrlParams": {
-            "simulate": "1error"
+            "simulate": "1error",
+            "target": "semanticObject"
           }
         }
       },
