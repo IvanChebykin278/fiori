@@ -82,6 +82,32 @@ module.exports = async (srv) => {
         }
     });
 
+    srv.before(['CREATE','UPDATE'], 'Actions', async (req) => {
+        const entry = await SELECT.one().from(Actions).where(req.data.action);
+
+        if(entry) {
+            return req.error({
+                code: 'ACTION_ALREADY_EXISTS',
+                message: 'Action already exists',
+                target: 'action',
+                status: 400
+            });
+        }
+    });
+
+    srv.before(['CREATE','UPDATE'], 'SemanticObjects', async (req) => {
+        const entry = await SELECT.one().from(SemanticObjects).where(req.data.semanticObject);
+
+        if(entry) {
+            return req.error({
+                code: 'SEMANTIC_ALREADY_EXISTS',
+                message: 'Semantic object already exists',
+                target: 'semanticObject',
+                status: 400
+            });
+        }
+    });
+
     srv.on('DELETE', ['Actions', 'SemanticObjects'], async (req) => {
         const entry = await SELECT.one().from(req.target.name).where(req.data);
         const { ID, createdAt, createdBy, modifiedAt, modifiedBy, isReadOnly, ...data } = entry;
