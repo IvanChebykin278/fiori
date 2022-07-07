@@ -60,7 +60,9 @@ module.exports = async (srv) => {
         }
     });
 
-    srv.before('UPDATE', 'Actions', async (req) => {
+    srv.before(['CREATE','UPDATE'], 'Actions', async (req) => {
+        const entry = await SELECT.one().from(Actions).where({ action: req.data.action });
+
         if(!req.data.action) {
             return req.error({
                 code: 'ACTION_IS_EMPTY',
@@ -69,21 +71,6 @@ module.exports = async (srv) => {
                 status: 400
             });
         }
-    });
-
-    srv.before('UPDATE', 'SemanticObjects', async (req) => {
-        if(!req.data.semanticObject) {
-            return req.error({
-                code: 'SEMANTIC_OBJECT_IS_EMPTY',
-                message: 'Name of Semantic object can not be empty',
-                target: 'semanticObject',
-                status: 400
-            });
-        }
-    });
-
-    srv.before(['CREATE','UPDATE'], 'Actions', async (req) => {
-        const entry = await SELECT.one().from(Actions).where(req.data.action);
 
         if(entry) {
             return req.error({
@@ -96,7 +83,16 @@ module.exports = async (srv) => {
     });
 
     srv.before(['CREATE','UPDATE'], 'SemanticObjects', async (req) => {
-        const entry = await SELECT.one().from(SemanticObjects).where(req.data.semanticObject);
+        const entry = await SELECT.one().from(SemanticObjects).where({ semanticObject: req.data.semanticObject });
+
+        if(!req.data.semanticObject) {
+            return req.error({
+                code: 'SEMANTIC_OBJECT_IS_EMPTY',
+                message: 'Name of Semantic object can not be empty',
+                target: 'semanticObject',
+                status: 400
+            });
+        }
 
         if(entry) {
             return req.error({
