@@ -6,7 +6,12 @@ module.exports = async (srv) => {
 
     srv.before(['DELETE', 'UPDATE', 'CREATE'], '*', async (req) => {
         if(req.req.url.indexOf('simulate=error') >= 0) {
-            return req.reject(500, `This is a auto-genereted error for debugging`);
+            return req.error({
+                code: 'DEBUGGING',
+                message: 'This is a auto-genereted error for debugging',
+                target: req.req.url.indexOf('target=semanticObject') >= 0 ? 'semanticObject' : 'action' ,
+                status: 418
+            });
         }
     });
 
@@ -47,7 +52,33 @@ module.exports = async (srv) => {
         const deletedEntry = await SELECT.one().from(req.target.name).where({ ID: req.data.ID });
 
         if (deletedEntry.isReadOnly) {
-            return req.reject(409, 'Entry is Read-Only');
+            return req.error({
+                code: 'ENTITY_IS_READ_ONLY',
+                message: 'Entry is Read-Only',
+                status: 409
+            });
+        }
+    });
+
+    srv.before('UPDATE', 'Actions', async (req) => {
+        if(!req.data.action) {
+            return req.error({
+                code: 'ACTION_IS_EMPTY',
+                message: 'Name of Action can not be empty',
+                target: 'action',
+                status: 400
+            });
+        }
+    });
+
+    srv.before('UPDATE', 'SemanticObjects', async (req) => {
+        if(!req.data.semanticObject) {
+            return req.error({
+                code: 'SEMANTIC_OBJECT_IS_EMPTY',
+                message: 'Name of Semantic object can not be empty',
+                target: 'semanticObject',
+                status: 400
+            });
         }
     });
 
@@ -57,7 +88,11 @@ module.exports = async (srv) => {
         const targetMapping = await SELECT.one().from(TargetMappings).where(data);
 
         if (targetMapping) {
-            req.reject(409, 'Entry is already used in target mapping');
+            return req.error({
+                code: 'ENTITY_ALREADY_USED',
+                message: 'Entry is already used in target mapping',
+                status: 409
+            });
         }
 
         cds.run(req.query);

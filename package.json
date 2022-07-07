@@ -19,7 +19,7 @@
     "sqlite3": "^5.0.2"
   },
   "scripts": {
-    "start": "cds run",
+    "start": "cds start",
     "watch-launchpad": "cds watch --open launchpad/webapp/index.html?sap-ui-xx-viewCache=false",
     "undeploy": "cf undeploy fiori --delete-services --delete-service-keys",
     "watch-designer": "cds watch --open designer/webapp/index.html?sap-ui-xx-viewCache=false"
