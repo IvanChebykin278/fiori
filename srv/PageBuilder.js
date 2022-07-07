@@ -83,7 +83,7 @@ module.exports = async (srv) => {
     });
 
     srv.before(['CREATE','UPDATE'], 'Actions', async (req) => {
-        const entry = await SELECT.one().from(Actions).where({ action: req.data.action });
+        const entry = await SELECT.one().from(Actions).where(req.data.action);
 
         if(entry) {
             return req.error({
@@ -96,7 +96,7 @@ module.exports = async (srv) => {
     });
 
     srv.before(['CREATE','UPDATE'], 'SemanticObjects', async (req) => {
-        const entry = await SELECT.one().from(SemanticObjects).where({ semanticObject: req.data.semanticObject });
+        const entry = await SELECT.one().from(SemanticObjects).where(req.data.semanticObject);
 
         if(entry) {
             return req.error({

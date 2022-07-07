@@ -102,22 +102,26 @@ sap.ui.define([
 
                         var aMessages = oModel.getMessages(oBindingContext);
 
-                        for(var oMessage in aMessages) {
+                        var bIsError = aMessages.reduce(function(result, oMessage){
+
                             var isCorrectTarget = oMessage.getTarget() === oBindingContext.getPath() + "/semanticObject";
                             var isError = oMessage.getType() === library.MessageType.Error;
 
-                            if(isCorrectTarget && isError) {
-                                return;
-                            }
-                        }
-                        
-                        sap.m.MessageToast.show(semanticObjectInsertSccsess);
-                        oDialog.close();
+                            return (isCorrectTarget && isError) || result;
 
+                        }, false);
+
+                        if (!bIsError){
+                            sap.m.MessageToast.show(semanticObjectInsertSccsess);
+                            oDialog.close();
+                        }
+
+                        
                     }.bind(this),
                     error: function(oResponse) {
                         //Должен вылетать месседж тоаст с ошибкой
                         // oResponse.message.value
+                        
                     }.bind(this)
                 });
             },
