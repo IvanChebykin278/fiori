@@ -31,7 +31,7 @@ sap.ui.define([
                 var isErrorMessages = aMessages.reduce(function(result, oMessage) {
                     var isCorrectTarget = oMessage.getTarget() === oBindingContext.getPath() + '/ID';
                     var isErrorType = oMessage.getType() === library.MessageType.Error;
-
+                    
                     return (isCorrectTarget && isErrorType) || result;
                 }.bind(this), false);
 

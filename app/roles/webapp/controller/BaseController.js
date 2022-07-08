@@ -17,11 +17,8 @@ sap.ui.define([
             var oMessageManager = sap.ui.getCore().getMessageManager();
             var oMessageTemplate = new MessageItem({
 				type: '{messages>type}',
-				title: '{messages>title}',
-				activeTitle: "{messages>active}",
+				title: '{messages>message}',
 				description: '{messages>description}',
-				subtitle: '{messages>subtitle}',
-				counter: '{messages>counter}'
 			});
 
             this.oMessagePopover = new MessagePopover({

@@ -1,6 +1,23 @@
 const cds = require("@sap/cds");
+const { verbose } = require("sqlite3");
 
 module.exports = (srv) => {
+
+    const messageFactory = (target, event) => {
+        switch(true) {
+            case target.indexOf('Roles') >= 0:
+                return `Role was ${event.toLowerCase()}d successfully`;
+            case target.indexOf('RoleUser') >= 0:
+                return `User assignment in the role was ${event.toLowerCase()}d successfully`;
+            case target.indexOf('RoleCatalog') >= 0:
+                return `Catalog assignment in the role was ${event.toLowerCase()}d successfully`;
+            case target.indexOf('RoleGroup') >= 0:
+                return `User assignment in the role was ${event.toLowerCase()}d successfully`;
+            default:
+                return 'Event was performed successfully';
+        }
+    };
+
     srv.before(['DELETE', 'UPDATE'], '*', async (req) => {
         const deletedEntry = await SELECT.one().from(req.target.name).where({ ID: req.data.ID });
 
@@ -33,5 +50,13 @@ module.exports = (srv) => {
                 status: 400
             });
         }
+    });
+
+    srv.after(['CREATE','UPDATE','DELETE'], '*', (data, req) => {
+        req.notify({
+            code: 'SUCCESS',
+            message: messageFactory(req.target.name, req.event),
+            status: 200
+        });
     });
 };
