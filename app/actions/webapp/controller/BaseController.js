@@ -4,13 +4,33 @@ sap.ui.define([
 	"../model/models",
 	"sap/ui/core/routing/History",
 	"sap/ui/core/Fragment",
-    "sap/ui/core/Control"
-], function (Controller,formatter,models,History,Fragment) {
+    'sap/m/MessagePopover',
+	'sap/m/MessageItem'
+], function (Controller,formatter,models,History,Fragment,MessagePopover,MessageItem) {
 	"use strict";
 
 	return Controller.extend("fiori.actions.controller.BaseController", {
         models: models,
         formatter: formatter,
+
+        onInit: function() {
+            var oMessageManager = sap.ui.getCore().getMessageManager();
+            var oMessageTemplate = new MessageItem({
+				type: '{messages>type}',
+				title: '{messages>message}',
+				description: '{messages>description}',
+			});
+
+            this.oMessagePopover = new MessagePopover({
+				items: {
+					path: 'messages>/',
+					template: oMessageTemplate
+				}
+			});
+
+            this.setModel(oMessageManager.getMessageModel(), 'messages');
+            this.byId("messagePopoverBtn").addDependent(this.oMessagePopover);
+        },
 
         getRouter: function () {
             return this.getOwnerComponent().getRouter();
@@ -63,6 +83,12 @@ sap.ui.define([
             }
 
             return await this[sDialogName];
+        },
+        handleMessagePopoverPress: function(oEvent) {
+
+            this.oMessagePopover.toggle(oEvent.getSource());
         }
+        
+        
     });
 });

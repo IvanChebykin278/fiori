@@ -32,34 +32,40 @@
                 enableAutoBinding="true" 
                 class="sapUiResponsiveContentPadding" 
                 enableAutoColumnWidth="true">
-                <smartTable:customToolbar>
-                    <Toolbar>
-                        <ToolbarSpacer />
-                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>Insert}" press="onOpenInsertDialog">
-                            <customData>
-                                <core:CustomData key="dialogName" value="InsertActionDialog" />
-                                <core:CustomData key="actionName" value="Insert" />
-                            </customData>
-                        </Button>
-                        <Button icon="sap-icon://edit"  enabled="{view>/selectedAction/isSelected}" text="{i18n>Edit}" press="onOpenInsertDialog">
-                            <customData>
-                                <core:CustomData key="dialogName" value="EditActionDialog" />
-                                <core:CustomData key="actionName" value="Edit" />
-                            </customData>
-                        </Button>
-                        <Button icon="sap-icon://delete"  type="Reject" enabled="{view>/selectedAction/isSelected}" text="{i18n>Delete}" press="onOpenInsertDialog">
-                            <customData>
-                                <core:CustomData key="dialogName" value="DeleteActionDialog" />
-                                <core:CustomData key="actionName"  value="Delete" />
-                            </customData>
-                        </Button>
-                    </Toolbar>
-                </smartTable:customToolbar>
                 <Table id="idActionsTable" mode="SingleSelectLeft" selectionChange="onSelectionChange"/>
 				<smartTable:layoutData>
 					<FlexItemData growFactor="1" baseSize="0%"/>
 				</smartTable:layoutData>
 			</smartTable:SmartTable>
         </content>
+        <footer>
+            <OverflowToolbar>
+                <Button id="messagePopoverBtn"
+					icon="{ path: 'messages>/', formatter: '.formatter.buttonIconFormatter' }"
+					type="{ path: 'messages>/', formatter: '.formatter.buttonTypeFormatter' }"
+					text= "{ path: 'messages>/', formatter: '.formatter.highestSeverityMessages' }"
+					press=".handleMessagePopoverPress"
+					ariaHasPopup="Dialog"/>
+				<ToolbarSpacer/>
+                <Button icon="sap-icon://add" type="Emphasized" text="{i18n>Insert}" press="onOpenInsertDialog">
+                    <customData>
+                        <core:CustomData key="dialogName" value="InsertActionDialog" />
+                        <core:CustomData key="actionName" value="Insert" />
+                    </customData>
+                </Button>
+                <Button icon="sap-icon://edit" type="Attention" enabled="{view>/selectedAction/isSelected}" text="{i18n>Edit}" press="onOpenInsertDialog">
+                    <customData>
+                        <core:CustomData key="dialogName" value="EditActionDialog" />
+                        <core:CustomData key="actionName" value="Edit" />
+                    </customData>
+                </Button>
+                <Button icon="sap-icon://delete"  type="Reject" enabled="{view>/selectedAction/isSelected}" text="{i18n>Delete}" press="onOpenInsertDialog">
+                    <customData>
+                        <core:CustomData key="dialogName" value="DeleteActionDialog" />
+                        <core:CustomData key="actionName"  value="Delete" />
+                    </customData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>

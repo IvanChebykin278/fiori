@@ -1,9 +1,10 @@
 sap.ui.define([
         "sap/ui/core/UIComponent",
         "sap/ui/Device",
-        "fiori/actions/model/models"
+        "fiori/actions/model/models",
+        "fiori/actions/controller/ErrorHandler"
     ],
-    function (UIComponent, Device, models) {
+    function (UIComponent, Device, models, ErrorHandler) {
         "use strict";
 
         return UIComponent.extend("fiori.actions.Component", {
@@ -17,6 +18,12 @@ sap.ui.define([
              * @override
              */
             init: function () {
+                var oMessageManager = sap.ui.getCore().getMessageManager();
+                var oModel = this.getModel();
+                
+                // register message processor
+                oMessageManager.registerMessageProcessor(oModel);
+
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
 
@@ -25,6 +32,8 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
+
+                this.oErrorHandler = new ErrorHandler(this);
             }
         });
     }

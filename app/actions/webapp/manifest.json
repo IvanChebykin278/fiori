@@ -82,7 +82,9 @@
         "settings": {
           "defaultBindingMode": "TwoWay",
           "serviceUrlParams": {
-            "simulate": "error"
+            "simulate": "",
+            "target": "action",
+            "persistTechnicalMessages": true
           }
         }
       }

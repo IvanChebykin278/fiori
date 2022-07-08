@@ -1,14 +1,17 @@
 sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
-    "./ErrorHandler"
-], function (BaseController,JSONModel, ErrorHandler) {
+    "sap/ui/core/library"
+], function (BaseController,JSONModel,library) {
     "use strict";
     
     
     
     return BaseController.extend("fiori.actions.controller.Overview", {
+        
         onInit: function () {
+            BaseController.prototype.onInit.apply(this, arguments);
+
             var oData = {
                 selectedAction: {
                     data: null,
@@ -73,7 +76,7 @@ sap.ui.define([
                     sap.m.MessageBox.show(this.getResourceBundle().getText("onDelete"), {
                         icon: sap.m.MessageBox.Icon.SUCCESS
                     });
-                    
+                    this.getModel().refresh(true);
                     oDialog.close();
                     this._removeSelection();
                 }.bind(this),
@@ -83,8 +86,10 @@ sap.ui.define([
                         title: this.getResourceBundle().getText("ErrorTitle"),
                         details: oResponse.responseText
                     });
+                    this.getModel().refresh(true);
                 }.bind(this)
             });
+            
         },
 
         onCancel: function(oEvent) {
@@ -92,7 +97,7 @@ sap.ui.define([
             var oDialog = oSource.getParent();
 
             this.getModel().resetChanges();
-            
+            this.getModel().refresh(true);
             oDialog.close();
         },
 
@@ -108,40 +113,32 @@ sap.ui.define([
         _changeEntity: function(oEvent, sMessage){
             var oSource = oEvent.getSource();
             var oDialog = oSource.getParent();
-
-            // if (this.getBindingContext())
-
+            var oBindingContext = oDialog.getBindingContext();
+            var oModel = oBindingContext.getModel();
+            var semanticObjectInsertSuccess = this.getResourceBundle().getText(sMessage);
+            
             this.getModel().submitChanges({
+            
                 success: function(oResponse) {
-                    for (var i=0; i<oResponse.__batchResponses.length; i++){
-                        var oBatchResponse = oResponse.__batchResponses[i];
-                        if (oBatchResponse._changeResponses) {
-                            for (var i=0; i<oBatchResponse._changeResponses.length; i++){
-                                var statusCode = oBatchResponse._changeResponses[i].statusCode
-                                if (statusCode.indexOf('2') != 0) {
-                                    return sap.m.MessageBox.error(oBatchResponse[i].message,{
-                                        icon: sap.m.MessageBox.Icon.ERROR,
-                                        title: this.getResourceBundle().getText("ErrorTitle"),
-                                        details: oBatchResponse[i].response
-                                    })
-                                }
-                            }
-                        } else {
-                            sap.m.MessageBox.error(oBatchResponse.message,{
-                                icon: sap.m.MessageBox.Icon.ERROR,
-                                title: this.getResourceBundle().getText("ErrorTitle"),
-                                details: oBatchResponse.response.body
-                            });
-                            return;
-                        }
-                    }
 
-                    sap.m.MessageBox.show(this.getResourceBundle().getText(sMessage),{
-                        icon: sap.m.MessageBox.Icon.SUCCESS
-                    });
-                    
-                    oDialog.close();
-                }.bind(this),
+                        var aMessages = oModel.getMessages(oBindingContext);
+
+                        var bIsError = aMessages.reduce(function(result, oMessage){
+
+                            var isCorrectTarget = oMessage.getTarget() === oBindingContext.getPath() + "/action";
+                            var isError = oMessage.getType() === library.MessageType.Error;
+
+                            return (isCorrectTarget && isError) || result;
+
+                        }, false);
+
+                        if (!bIsError){
+                            sap.m.MessageToast.show(semanticObjectInsertSuccess);
+                            oDialog.close();
+                        }
+
+                        
+                    }.bind(this),
                 error: function(oResponse) {
                     
                     sap.m.MessageBox.show(JSON.parse(oResponse.responseText).error.message.value,{
@@ -150,6 +147,7 @@ sap.ui.define([
                     });
                 }.bind(this)
             });
+            
         }
     });
 });
