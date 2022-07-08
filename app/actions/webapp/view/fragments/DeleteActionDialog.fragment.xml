@@ -6,9 +6,6 @@
 	<Dialog
 		class="sapUiSizeCompact"
 		title="{i18n>Delete} action: {action}?">
-		<customData>
-			<core:CustomData key="dialogName" value="DeleteActionDialog" />
-		</customData>
 		<content>
 			<f:SimpleForm id="idInsertForm"
 				editable="true"
@@ -32,8 +29,8 @@
 			</f:SimpleForm>
 		</content>
 		<buttons>
-			<Button text="{i18n>Delete}" press="onDelete" />
-			<Button text="{i18n>Cancel}" press="onCancel" />
+			<Button text="{i18n>Delete}" type="Reject" press="onDelete" />
+			<Button text="{i18n>Cancel}" type="Ghost" press="onCancel" />
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

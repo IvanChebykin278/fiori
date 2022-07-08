@@ -28,6 +28,10 @@ sap.ui.define([
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
 
+        showError: function() {
+            JSON.parse(oResponse.responseText).error.message.value;
+        },
+
         onNavBack: function () {
             var sPreviousHash = History.getInstance().getPreviousHash(),
                 oCrossAppNavigator = sap.ushell.Container.getService(

@@ -6,9 +6,6 @@
 	<Dialog
 		class="sapUiSizeCompact"
 		title="{i18n>Insert} action">
-		<customData>
-			<core:CustomData key="dialogName" value="InsertActionDialog" />
-		</customData>
 		<content>
 			<f:SimpleForm id="idInsertForm"
 				editable="true"
@@ -33,8 +30,8 @@
 			</f:SimpleForm>
 		</content>
 		<buttons>
-			<Button text="{i18n>Insert}" press="onInsert" />
-			<Button text="{i18n>Cancel}" press="onCancel" />
+			<Button text="{i18n>Insert}" type="Emphasized" press="onInsert" />
+			<Button text="{i18n>Cancel}" type="Reject" press="onCancel" />
 		</buttons>
 	</Dialog>
 </core:FragmentDefinition>

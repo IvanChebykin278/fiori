@@ -1,5 +1,5 @@
 {
-  "_version": "1.40.0",
+  "_version": "1.37.0",
   "sap.app": {
     "id": "fiori.actions",
     "type": "application",
@@ -81,7 +81,9 @@
         "preload": true,
         "settings": {
           "defaultBindingMode": "TwoWay",
-          "defaultUpdateMethod": "MERGE"
+          "serviceUrlParams": {
+            "simulate": "error"
+          }
         }
       }
     },

@@ -24,10 +24,9 @@
                 entitySet="Actions" 
                 smartFilterId="idSmartFilterBar" 
                 useExportToExcel="false" 
-                beforeExport="onBeforeExport" 
                 useVariantManagement="false" 
                 useTablePersonalisation="true" 
-                header="Actions" 
+                header="{i18n>Actions}" 
                 showRowCount="true" 
                 persistencyKey="SmartTableAnalytical_Explored" 
                 enableAutoBinding="true" 
@@ -42,23 +41,21 @@
                                 <core:CustomData key="actionName" value="Insert" />
                             </customData>
                         </Button>
-                        <Button icon="sap-icon://edit" type="Emphasized" enabled="{SelectedItem>/isSelected}" text="{i18n>Edit}" press="onOpenInsertDialog">
+                        <Button icon="sap-icon://edit"  enabled="{view>/selectedAction/isSelected}" text="{i18n>Edit}" press="onOpenInsertDialog">
                             <customData>
                                 <core:CustomData key="dialogName" value="EditActionDialog" />
                                 <core:CustomData key="actionName" value="Edit" />
                             </customData>
                         </Button>
-                        <Button icon="sap-icon://delete" type="Emphasized" enabled="{SelectedItem>/isSelected}" text="{i18n>Delete}" press="onOpenInsertDialog">
+                        <Button icon="sap-icon://delete"  type="Reject" enabled="{view>/selectedAction/isSelected}" text="{i18n>Delete}" press="onOpenInsertDialog">
                             <customData>
                                 <core:CustomData key="dialogName" value="DeleteActionDialog" />
-                                <core:CustomData key="actionName" value="Delete" />
+                                <core:CustomData key="actionName"  value="Delete" />
                             </customData>
                         </Button>
                     </Toolbar>
                 </smartTable:customToolbar>
-                <Table id="idActionsTable" mode="SingleSelectLeft" selectionChange="onSelectionChange">
-                    <ColumnListItem/>
-                </Table>
+                <Table id="idActionsTable" mode="SingleSelectLeft" selectionChange="onSelectionChange"/>
 				<smartTable:layoutData>
 					<FlexItemData growFactor="1" baseSize="0%"/>
 				</smartTable:layoutData>
