@@ -1,11 +1,12 @@
 sap.ui.define([
-    "./BaseController"
-], function (BaseController) {
+    "./BaseController",
+    "sap/ui/core/library"
+], function (BaseController,library) {
     "use strict";
 
     return BaseController.extend("fiori.roles.controller.Overview", {
         onInit: function () {
-
+            BaseController.prototype.onInit.apply(this, arguments);
         },
 
         onOpenInsertDialog: async function(oEvent) {
@@ -21,15 +22,26 @@ sap.ui.define([
         onInsert: function(oEvent) {
             var oSource = oEvent.getSource();
             var oDialog = oSource.getParent();
-            var oProperty = oSource.getBindingContext().getProperty();
+            var oBindingContext = oDialog.getBindingContext();
+            var oProperty = oBindingContext.getProperty();
             var oSubmitPromise = this.models.submitChanges.call(this, { groupId: 'roles' });
 
             oSubmitPromise.then(() => {
-                this.getRouter().navTo('Details', {
-                    path: oProperty.ID
-                });
+                var aMessages = oBindingContext.getModel().getMessages(oBindingContext);
+                var isErrorMessages = aMessages.reduce(function(result, oMessage) {
+                    var isCorrectTarget = oMessage.getTarget() === oBindingContext.getPath() + '/ID';
+                    var isErrorType = oMessage.getType() === library.MessageType.Error;
 
-                oDialog.close();
+                    return (isCorrectTarget && isErrorType) || result;
+                }.bind(this), false);
+
+                if(!isErrorMessages) {
+                    this.getRouter().navTo('Details', {
+                        path: oProperty.ID
+                    });
+
+                    oDialog.close();
+                }
             });
         },
 

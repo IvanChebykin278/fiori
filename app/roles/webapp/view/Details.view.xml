@@ -154,5 +154,10 @@
 				</subSections>
 			</ObjectPageSection>
 		</sections>
+        <footer>
+            <m:OverflowToolbar>
+                
+            </m:OverflowToolbar>
+        </footer>
 	</ObjectPageLayout>
 </mvc:View>
