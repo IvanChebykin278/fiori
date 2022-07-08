@@ -1,7 +1,8 @@
 const cds = require("@sap/cds");
-const { verbose } = require("sqlite3");
 
 module.exports = (srv) => {
+    const db = await cds.connect.to('db');
+    const { Roles, RoleUser, RoleCatalog, RoleGroup } = db.entities();
 
     const messageFactory = (target, event) => {
         switch(true) {

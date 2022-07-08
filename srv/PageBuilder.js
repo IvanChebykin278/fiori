@@ -4,6 +4,17 @@ module.exports = async (srv) => {
     const db = await cds.connect.to('db');
     const { Actions, Catalogs, Groups, SemanticObjects, TargetMappings, Tiles, CatalogTile } = db.entities();
 
+    const messageFactory = (target, event) => {
+        switch(true) {
+            case target.indexOf('Actions') >= 0:
+                return `Actions was ${event.toLowerCase()}d successfully`;
+            case target.indexOf('SemanticObjects') >= 0:
+                return `Semantic objects was ${event.toLowerCase()}d successfully`;
+            default:
+                return 'Event was performed successfully';
+        }
+    };
+
     srv.before(['DELETE', 'UPDATE', 'CREATE'], '*', async (req) => {
         if(req.req.url.indexOf('simulate=error') >= 0) {
             return req.error({
@@ -118,5 +129,13 @@ module.exports = async (srv) => {
         }
 
         cds.run(req.query);
+    });
+
+    srv.after(['CREATE','UPDATE','DELETE'], ['Actions', 'SemanticObjects'], async (data, req) => {
+        req.notify({
+            code: 'SUCCESS',
+            message: messageFactory(req.target.name, req.event),
+            status: 200
+        });
     });
 };
