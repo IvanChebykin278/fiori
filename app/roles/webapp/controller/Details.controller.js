@@ -12,6 +12,8 @@ sap.ui.define([
         roleId: null,
 
         onInit: function () {
+            BaseController.prototype.onInit.apply(this, arguments);
+
             this.getRouter().getRoute('Details').attachPatternMatched(this._onRouteMatch, this);
         },
 
@@ -71,7 +73,7 @@ sap.ui.define([
         onDeleteRole: function(oEvent) {
             var oBindingContext = this.getView().getBindingContext();
             var sPath = oBindingContext.getPath();
-            var oDeletionPromise = this.models.remove.call(this, sPath);
+            var oDeletionPromise = this.models.remove.call(this, [sPath]);
 
             oDeletionPromise.then(function() {
                 this.getRouter().navTo('Overview');
