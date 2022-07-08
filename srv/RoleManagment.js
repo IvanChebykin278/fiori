@@ -1,6 +1,6 @@
 const cds = require("@sap/cds");
 
-module.exports = (srv) => {
+module.exports = async (srv) => {
     const db = await cds.connect.to('db');
     const { Roles, RoleUser, RoleCatalog, RoleGroup } = db.entities();
 
@@ -51,6 +51,18 @@ module.exports = (srv) => {
                 status: 400
             });
         }
+    });
+
+    srv.before(['CREATE', 'UPDATE'], 'RoleUser', async (req) => {
+        
+    });
+
+    srv.before(['CREATE', 'UPDATE'], 'RoleCatalog', async (req) => {
+
+    });
+
+    srv.before(['CREATE', 'UPDATE'], 'RoleGroup', async (req) => {
+
     });
 
     srv.after(['CREATE','UPDATE','DELETE'], '*', (data, req) => {
