@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Shell</title>
+    <style>
+        html,
+        body,
+        body>div,
+        #container,
+        #container-uiarea {
+            height: 100%;
+        }
+    </style>
+    <script id="sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.ushell"
+        src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js" data-sap-ui-theme="sap_fiori_3"
+        data-sap-ui-resourceroots='{
+            "fiori.shell": "./"
+        }' data-sap-ui-compatVersion="edge" data-sap-ui-async="true" data-sap-ui-frameOptions="trusted"></script>
+    <script id="locate-reuse-libs" src="./utils/locate-reuse-libs.js" data-sap-ui-manifest-uri="./manifest.json"
+        data-sap-ui-componentName="fiori.shell">
+        </script>
+    <script>
+        window["sap-ushell-config"] = {
+            defaultRenderer: "fiori2",
+            renderers: {
+                fiori2: {
+                    componentData: {
+                        config: {
+                            enableSearch: false,
+                            enableUserDefaultParameters: true,
+                            rootIntent: "Shell-home"
+                        }
+                    }
+                }
+            },
+            services: {
+                NavTargetResolution: {
+                    config: {
+                        "allowTestUrlComponentConfig": true,
+                        "enableClientSideTargetResolution": true
+                    }
+                },
+                SupportTicket: {
+                    // switched off as the local adapter is not connected to a ticket system
+                    config: {
+                        enabled: false
+                    }
+                },
+                SmartNavigation: {
+                    config: {
+                        isTrackingEnabled: true
+                    }
+                }
+            }
+        };
+    </script>
+
+</head>
+
+<body class="sapUiBody sapUiSizeCompact" id="content">
+    <div data-sap-ui-component data-name="fiori.shell" data-id="container" data-settings='{"id" : "fiori.shell"}'
+        data-handle-validation="true"></div>
+</body>
+
+</html>
