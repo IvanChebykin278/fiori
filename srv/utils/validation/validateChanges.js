@@ -1,8 +1,10 @@
-module.exports = async function(strategy) {
-    const message = await strategy.execute(this.data);
+const sendMessage = require('../messages/sendMessage');
 
-    if(message) {
-        this.utils.sendMessage(message);
+module.exports = async function (strategy) {
+    const message = await strategy.execute(cds.context.data);
+
+    if (message) {
+        sendMessage(message);
 
         return false;
     }
