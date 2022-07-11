@@ -22,8 +22,10 @@ sap.ui.define([
 			});
 
             this.oMessagePopover = new MessagePopover({
-				items: {
+				groupItems: true,
+                items: {
 					path: 'messages>/',
+                    sorter: new sap.ui.model.Sorter({ path: 'date', descending: true}), 
 					template: oMessageTemplate
 				}
 			});
@@ -74,15 +76,20 @@ sap.ui.define([
 
             if (!this[sDialogName]) {
                 this[sDialogName] = await Fragment.load({
-                id: sDialogName,
-                name: "fiori.actions.view.fragments." + sDialogName,
-                controller: this,
+                    id: sDialogName,
+                    name: "fiori.actions.view.fragments." + sDialogName,
+                    controller: this,
                 });
 
                 oView.addDependent(this[sDialogName]);
             }
 
-            return await this[sDialogName];
+            var oDialog = await this[sDialogName];
+            oDialog.attachEventOnce('afterClose',function(oEvent){
+                oEvent.getSource().unbindElement();
+                this.getModel().refresh(false);
+            }, this);
+            return oDialog;
         },
         handleMessagePopoverPress: function(oEvent) {
 

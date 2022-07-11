@@ -73,10 +73,10 @@ sap.ui.define([
             this.getModel().remove(sPath, {
                 success: function(oResponse) {
 
-                    sap.m.MessageBox.show(this.getResourceBundle().getText("onDelete"), {
+                    sap.m.MessageBox.success(this.getResourceBundle().getText("onDelete"), {
                         icon: sap.m.MessageBox.Icon.SUCCESS
                     });
-                    this.getModel().refresh(true);
+                    // this.getModel().destroyBindingContext(oDialog.getBindingContext())
                     oDialog.close();
                     this._removeSelection();
                 }.bind(this),
@@ -86,7 +86,7 @@ sap.ui.define([
                         title: this.getResourceBundle().getText("ErrorTitle"),
                         details: oResponse.responseText
                     });
-                    this.getModel().refresh(true);
+                    // this.getModel().refresh(true);
                 }.bind(this)
             });
             
@@ -95,10 +95,11 @@ sap.ui.define([
         onCancel: function(oEvent) {
             var oSource = oEvent.getSource();
             var oDialog = oSource.getParent();
-
-            this.getModel().resetChanges();
-            this.getModel().refresh(true);
+            var sPath = oSource.getBindingContext().getPath();
+        
+            this.getModel().resetChanges([ sPath ], true, true);
             oDialog.close();
+            // this.getModel().destroyBindingContext(this.getModel().getBindingContext())
         },
 
         _removeSelection: function(){
@@ -115,7 +116,7 @@ sap.ui.define([
             var oDialog = oSource.getParent();
             var oBindingContext = oDialog.getBindingContext();
             var oModel = oBindingContext.getModel();
-            var semanticObjectInsertSuccess = this.getResourceBundle().getText(sMessage);
+            var actionInsertSuccess = this.getResourceBundle().getText(sMessage);
             
             this.getModel().submitChanges({
             
@@ -133,10 +134,13 @@ sap.ui.define([
                         }, false);
 
                         if (!bIsError){
-                            sap.m.MessageToast.show(semanticObjectInsertSuccess);
+                            sap.m.MessageBox.success(actionInsertSuccess, {
+                                icon: sap.m.MessageBox.Icon.SUCCESS
+                            });
                             oDialog.close();
+                            // this.getModel().destroyBindingContext(this.getModel().getBindingContext())
                         }
-
+                       
                         
                     }.bind(this),
                 error: function(oResponse) {
@@ -147,6 +151,8 @@ sap.ui.define([
                     });
                 }.bind(this)
             });
+
+            
             
         }
     });

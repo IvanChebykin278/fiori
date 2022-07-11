@@ -7,9 +7,9 @@ module.exports = async (srv) => {
     const messageFactory = (target, event) => {
         switch(true) {
             case target.indexOf('Actions') >= 0:
-                return `Actions was ${event.toLowerCase()}d successfully`;
+                return `Action was ${event.toLowerCase()}d successfully`;
             case target.indexOf('SemanticObjects') >= 0:
-                return `Semantic objects was ${event.toLowerCase()}d successfully`;
+                return `Semantic object was ${event.toLowerCase()}d successfully`;
             default:
                 return 'Event was performed successfully';
         }
