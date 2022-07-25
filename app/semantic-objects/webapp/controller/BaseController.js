@@ -14,14 +14,6 @@ sap.ui.define([
         formatter: formatter,
 
         onInit: function(){
-            // var oMessageTemplate = new MessageItem({
-			// 	type: '{messages>type}',
-			// 	title: '{messages>title}',
-			// 	activeTitle: "{messages>active}",
-			// 	description: '{messages>description}',
-			// 	subtitle: '{messages>subtitle}',
-			// 	counter: '{messages>counter}'
-			// });
 
             var oMessageManager = sap.ui.getCore().getMessageManager();
             var oMessageTemplate = new MessageItem({

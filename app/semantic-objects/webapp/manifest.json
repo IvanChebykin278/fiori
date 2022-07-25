@@ -84,8 +84,10 @@
           "defaultBindingMode": "TwoWay",
           "persistTechnicalMessages": true,
           "serviceUrlParams": {
-            "simulate": "1error",
-            "target": "semanticObject"
+            "simulate": "error",
+            "target": "semanticObject",
+            "persistTechnicalMessages": true,
+            "refreshAfterChange": false
           }
         }
       },
