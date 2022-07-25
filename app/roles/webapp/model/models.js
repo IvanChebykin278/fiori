@@ -58,8 +58,6 @@ sap.ui.define([
                         oModel.submitChanges({
                             groupId: oParameters ? oParameters.groupId : undefined,
                             success: oResponse => {
-                                sap.m.MessageToast.show('Entry/Entries has beed saved successfull');
-
                                 resolve(oResponse);
                             },
                             error: oResponse => reject(oResponse)

@@ -4,16 +4,16 @@ module.exports = async (srv) => {
     const db = await cds.connect.to('db');
     const { Actions, Catalogs, Groups, SemanticObjects, TargetMappings, Tiles, CatalogTile } = db.entities();
 
-    srv.before(['DELETE', 'UPDATE', 'CREATE'], '*', async (req) => {
-        if(req.req.url.indexOf('simulate=error') >= 0) {
-            return req.error({
-                code: 'DEBUGGING',
-                message: 'This is a auto-genereted error for debugging',
-                target: req.req.url.indexOf('target=semanticObject') >= 0 ? 'semanticObject' : 'action' ,
-                status: 418
-            });
+    const messageFactory = (target, event) => {
+        switch(true) {
+            case target.indexOf('Actions') >= 0:
+                return `Actions was ${event.toLowerCase()}d successfully`;
+            case target.indexOf('SemanticObjects') >= 0:
+                return `Semantic objects was ${event.toLowerCase()}d successfully`;
+            default:
+                return 'Event was performed successfully';
         }
-    });
+    };
 
     srv.on('getActionControl', async req => {
         const { catalogId, tileId } = req.data;
@@ -47,6 +47,10 @@ module.exports = async (srv) => {
 
         return req.reject(400, `Tile with ID ${tileId} didn't assigned to Catalog ${catalogId}`);
     });
+
+    // srv.before('READ', '*', req => {
+    //     req.utils.sendMessage();
+    // });
 
     srv.before(['DELETE', 'UPDATE'], '*', async (req) => {
         const deletedEntry = await SELECT.one().from(req.target.name).where({ ID: req.data.ID });
@@ -118,5 +122,13 @@ module.exports = async (srv) => {
         }
 
         cds.run(req.query);
+    });
+
+    srv.after(['CREATE','UPDATE','DELETE'], ['Actions', 'SemanticObjects'], async (data, req) => {
+        req.notify({
+            code: 'SUCCESS',
+            message: messageFactory(req.target.name, req.event),
+            status: 200
+        });
     });
 };

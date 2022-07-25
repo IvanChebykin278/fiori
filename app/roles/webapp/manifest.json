@@ -81,9 +81,8 @@
         "preload": true,
         "settings": {
           "defaultBindingMode": "TwoWay",
-          "serviceUrlParams": {
-            "simulate": "error"
-          }
+          "refreshAfterChange": false,
+          "persistTechnicalMessages": true
         }
       },
       "pageBuilder": {

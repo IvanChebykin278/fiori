@@ -8,6 +8,7 @@
   "dependencies": {
     "@sap/cds": "^5",
     "@sap/cds-odata-v2-adapter-proxy": "^1.8.20",
+    "@sap/textbundle": "^4.1.0",
     "@sap/xsenv": "^3.3.2",
     "@sap/xssec": "^3.2.13",
     "express": "^4",

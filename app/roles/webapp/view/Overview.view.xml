@@ -33,16 +33,6 @@
                 enableAutoBinding="true" 
                 class="sapUiResponsiveContentPadding" 
                 enableAutoColumnWidth="true">
-                <smartTable:customToolbar>
-                    <Toolbar>
-                        <ToolbarSpacer />
-                        <Button icon="sap-icon://add" type="Emphasized" text="Insert" press="onOpenInsertDialog">
-                            <customData>
-                                <core:CustomData key="dialogName" value="InsertRoleDialog" />
-                            </customData>
-                        </Button>
-                    </Toolbar>
-                </smartTable:customToolbar>
                 <Table mode="None">
                     <ColumnListItem type="Navigation" press="onNavToDetails" />
                 </Table>
@@ -51,5 +41,21 @@
 				</smartTable:layoutData>
 			</smartTable:SmartTable>
         </content>
+        <footer>
+            <OverflowToolbar>
+                <Button id="messagePopoverBtn"
+					icon="{ path: 'messages>/', formatter: '.formatter.buttonIconFormatter' }"
+					type="{ path: 'messages>/', formatter: '.formatter.buttonTypeFormatter' }"
+					text= "{ path: 'messages>/', formatter: '.formatter.highestSeverityMessages' }"
+					press=".handleMessagePopoverPress"
+					ariaHasPopup="Dialog"/>
+				<ToolbarSpacer/>
+                <Button icon="sap-icon://add" type="Emphasized" text="Insert" press="onOpenInsertDialog">
+                    <customData>
+                        <core:CustomData key="dialogName" value="InsertRoleDialog" />
+                    </customData>
+                </Button>
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>
