@@ -9,6 +9,9 @@ sap.ui.define([
         return BaseController.extend("fiori.semanticobjects.controller.Overview", {
 
             onInit: function () {
+
+                BaseController.prototype.onInit.apply(this,arguments);
+
                 var oData = {
                     selectedSemanticObject: {
                         data: null,

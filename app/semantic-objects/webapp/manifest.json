@@ -82,6 +82,7 @@
         "preload": true,
         "settings": {
           "defaultBindingMode": "TwoWay",
+          "persistTechnicalMessages": true,
           "serviceUrlParams": {
             "simulate": "1error",
             "target": "semanticObject"

@@ -34,7 +34,9 @@ sap.ui.define([
                 this.setModel(models.createDeviceModel(), "device");
 
                 this.oErrorHandler = new ErrorHandler(this);
-                
+
+                //
+                this.setModel(oMessageManager.getMessageModel(), 'messages');
             }
         });
     }
