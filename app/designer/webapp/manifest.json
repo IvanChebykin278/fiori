@@ -17,12 +17,19 @@
     },
     "dataSources": {
       "mainService": {
-        "uri": "/page-builder/",
+        "uri": "/v2/service/PageBuilder",
         "type": "OData",
         "settings": {
           "annotations": [],
-          "localUri": "localService/metadata.xml",
-          "odataVersion": "4.0"
+          "odataVersion": "2.0"
+        }
+      },
+      "pageBuilderService": {
+        "uri": "/v2/service/PageBuilder",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "2.0"
         }
       }
     }
@@ -88,34 +95,50 @@
       ]
     },
     "routing": {
-      "config": {
+			"config": {
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
         "viewPath": "fiori.designer.view",
-        "controlAggregation": "pages",
-        "controlId": "app",
-        "clearControlAggregation": false
-      },
-      "routes": [
-        {
-          "name": "RouteApp",
-          "pattern": ":?query:",
-          "target": [
-            "TargetApp"
-          ]
-        }
-      ],
-      "targets": {
-        "TargetApp": {
-          "viewType": "XML",
-          "transition": "slide",
-          "clearControlAggregation": false,
-          "viewId": "App",
-          "viewName": "App"
-        }
-      }
-    },
+        "controlId": "app"
+			},
+			"routes": [
+				{
+					"name": "home",
+					"pattern": "",
+					"target": [
+						"Master",
+						"catalogDetails"
+					]
+				},
+				{
+					"name": "catalogDetails",
+					"pattern": "catalogs/:Id:",
+					"target": [
+						"Master",
+						"catalogDetails"
+					]
+				}
+			],
+			"targets": {
+        "layout": {
+          "viewName": "Layout",
+          "viewId": "layout",
+          "controlId": "app",
+          "controlAggregation": "content"
+        },
+				"Master": {
+					"viewName": "Master",
+          "viewId": "catalogsMaster",
+          "controlAggregation": "masterPages"
+				},
+				"catalogDetails": {
+					"viewName": "CatalogsDetails",
+          "viewId": "catalogsDetails",
+          "controlAggregation": "detailPages"
+				}
+			}
+		},
     "rootView": {
       "viewName": "fiori.designer.view.App",
       "type": "XML",

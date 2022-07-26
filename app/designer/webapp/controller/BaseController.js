@@ -14,24 +14,24 @@ sap.ui.define([
         formatter: formatter,
 
         onInit: function() {
-            var oMessageManager = sap.ui.getCore().getMessageManager();
-            var oMessageTemplate = new MessageItem({
-				type: '{messages>type}',
-				title: '{messages>message}',
-				description: '{messages>description}',
-			});
+            // var oMessageManager = sap.ui.getCore().getMessageManager();
+            // var oMessageTemplate = new MessageItem({
+			// 	type: '{messages>type}',
+			// 	title: '{messages>message}',
+			// 	description: '{messages>description}',
+			// });
 
-            this.oMessagePopover = new MessagePopover({
-				groupItems: true,
-                items: {
-					path: 'messages>/',
-                    sorter: new sap.ui.model.Sorter({ path: 'date', descending: true}), 
-					template: oMessageTemplate
-				}
-			});
+            // this.oMessagePopover = new MessagePopover({
+			// 	groupItems: true,
+            //     items: {
+			// 		path: 'messages>/',
+            //         sorter: new sap.ui.model.Sorter({ path: 'date', descending: true}), 
+			// 		template: oMessageTemplate
+			// 	}
+			// });
 
-            this.setModel(oMessageManager.getMessageModel(), 'messages');
-            this.byId("messagePopoverBtn").addDependent(this.oMessagePopover);
+            // this.setModel(oMessageManager.getMessageModel(), 'messages');
+            // this.byId("messagePopoverBtn").addDependent(this.oMessagePopover);
         },
 
         getRouter: function () {
@@ -77,7 +77,7 @@ sap.ui.define([
             if (!this[sDialogName]) {
                 this[sDialogName] = await Fragment.load({
                     id: sDialogName,
-                    name: "fiori.actions.view.fragments." + sDialogName,
+                    name: "fiori.designer.view.fragments." + sDialogName,
                     controller: this,
                 });
 

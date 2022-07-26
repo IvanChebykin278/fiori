@@ -1,1 +1,10 @@
 /* Enter your custom styles here */
+.details{
+    background-color: red !important;
+}
+.master{
+    background-color: blue !important;
+}
+div.sapMTabContainer.noCloseButtons > .sapMTabStripContainer > .sapMTabStrip > .sapMTSTabsContainer > .sapMTSTabs > .sapMTabStripItem > .sapMTSItemCloseBtnCnt {
+    visibility: hidden;
+  }

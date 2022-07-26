@@ -1,7 +1,6 @@
 <mvc:View controllerName="fiori.designer.controller.App"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-        <content />
-    </Page>
+    <SplitApp
+		id="app"/>
 </mvc:View>

@@ -1,0 +1,55 @@
+<mvc:View
+    height="100%"
+    displayBlock="true"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+    xmlns:semantic="sap.m.semantic"
+	controllerName="fiori.designer.controller.Master">
+
+	<semantic:MasterPage>
+
+		<IconTabBar id="myTabContainer"
+		select="onItemSelected"
+		class="sapUiResponsiveContentPadding" headerMode="Inline" applyContentPadding="true" expandable="false" tabDensityMode="Inherit">
+			<items>
+				<IconTabFilter  text="{i18n>Catalogs}" icon="sap-icon://grid" key="Catalogs">
+					<content>
+						<OverflowToolbar>
+							<SearchField liveChange=".onSearch" width="100%" />
+						</OverflowToolbar>
+						<List
+						id="idListCatalogs"
+						items="{/Catalogs}"
+						selectionChange=".onSelectionChange"
+						mode="SingleSelectMaster">
+							<StandardListItem
+								selected="true"
+								title="{title}"
+								description="{ID}"/>
+						</List>
+					</content>
+				</IconTabFilter>
+				<IconTabFilter text="{i18n>Groups}" icon="sap-icon://menu2" key="Groups">
+					<content>
+						<OverflowToolbar>
+							<SearchField liveChange=".onSearch" width="100%" />
+						</OverflowToolbar>
+						<List
+						id="idListGroups"
+						items="{/Groups}"
+						selectionChange=".onSelectionChange"
+						mode="SingleSelectMaster">
+							<StandardListItem
+							selected="true"
+							title="{title}"
+							description="{ID}"/>
+						</List>
+					</content>
+				</IconTabFilter>
+			</items>
+		</IconTabBar>
+	
+		
+	</semantic:MasterPage>
+</mvc:View>
