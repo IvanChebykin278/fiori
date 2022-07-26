@@ -32,31 +32,37 @@
                 enableAutoBinding="true"
                 class="sapUiResponsiveContentPadding" 
                 enableAutoColumnWidth="true">
-                <smartTable:customToolbar>
-                    <Toolbar>
-                        <ToolbarSpacer />
-                        <Button icon="sap-icon://add" type="Emphasized" text="{i18n>InsertSemanticObject}" press="onOpenInsertDialog">
-                            <customData>
-                                <core:CustomData key="dialogName" value="InsertSemanticObjectDialog" />
-                            </customData>
-                        </Button>
-                        <Button icon="sap-icon://edit" type="Ghost" enabled="{view>/selectedSemanticObject/isSelected}" text="{i18n>EditSemanticObject}" press="onEditInsertDialog">
-                            <customData>
-                                <core:CustomData key="dialogName" value="EditSemanticObjectDialog" />
-                            </customData>
-                        </Button>
-                        <Button icon="sap-icon://delete" type="Ghost" text="{i18n>DeleteSemanticObject}" enabled="{view>/selectedSemanticObject/isSelected}" press="onDeleteDialog">
-                            <customData>
-                                <core:CustomData key="dialogName" value="InsertRoleDialog" />
-                            </customData>
-                        </Button>
-                    </Toolbar>
-                </smartTable:customToolbar>
                 <Table id="semanticObjectsTable" mode="SingleSelectMaster" selectionChange="onSelectionChange" />
 				<smartTable:layoutData>
 					<FlexItemData growFactor="1" baseSize="0%"/>
 				</smartTable:layoutData>
 			</smartTable:SmartTable>
         </content>
+        <footer>
+            <OverflowToolbar>
+                <Button id="messagePopoverBtn"
+					icon="{ path: 'messages>/', formatter: '.formatter.buttonIconFormatter' }"
+					type="{ path: 'messages>/', formatter: '.formatter.buttonTypeFormatter' }"
+					text= "{path: 'messages>/', formatter: '.formatter.highestSeverityMessages' }"
+					press=".handleMessagePopoverPress"
+					ariaHasPopup="Dialog"/>
+				<ToolbarSpacer/>
+                    <Button icon="sap-icon://add" type="Emphasized" text="{i18n>InsertSemanticObject}" press="onOpenInsertDialog">
+                        <customData>
+                            <core:CustomData key="dialogName" value="InsertSemanticObjectDialog" />
+                        </customData>
+                    </Button>
+                    <Button icon="sap-icon://edit" type="Ghost" enabled="{view>/selectedSemanticObject/isSelected}" text="{i18n>EditSemanticObject}" press="onEditInsertDialog">
+                        <customData>
+                            <core:CustomData key="dialogName" value="EditSemanticObjectDialog" />
+                        </customData>
+                    </Button>
+                    <Button icon="sap-icon://delete" type="Ghost" text="{i18n>DeleteSemanticObject}" enabled="{view>/selectedSemanticObject/isSelected}" press="onDeleteDialog">
+                        <customData>
+                            <core:CustomData key="dialogName" value="InsertRoleDialog" />
+                        </customData>
+                    </Button>
+            </OverflowToolbar>
+        </footer>
     </Page>
 </mvc:View>

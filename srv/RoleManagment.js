@@ -53,18 +53,6 @@ module.exports = async (srv) => {
         }
     });
 
-    srv.before(['CREATE', 'UPDATE'], 'RoleUser', async (req) => {
-        
-    });
-
-    srv.before(['CREATE', 'UPDATE'], 'RoleCatalog', async (req) => {
-
-    });
-
-    srv.before(['CREATE', 'UPDATE'], 'RoleGroup', async (req) => {
-
-    });
-
     srv.after(['CREATE','UPDATE','DELETE'], '*', (data, req) => {
         req.notify({
             code: 'SUCCESS',

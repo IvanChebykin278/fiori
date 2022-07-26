@@ -15,17 +15,6 @@ module.exports = async (srv) => {
         }
     };
 
-    srv.before(['DELETE', 'UPDATE', 'CREATE'], '*', async (req) => {
-        if(req.req.url.indexOf('simulate=error') >= 0) {
-            return req.error({
-                code: 'DEBUGGING',
-                message: 'This is a auto-genereted error for debugging',
-                target: req.req.url.indexOf('target=semanticObject') >= 0 ? 'semanticObject' : 'action' ,
-                status: 418
-            });
-        }
-    });
-
     srv.on('getActionControl', async req => {
         const { catalogId, tileId } = req.data;
         const catalog = await SELECT.one().from(Catalogs).where({ ID: catalogId });
@@ -58,6 +47,10 @@ module.exports = async (srv) => {
 
         return req.reject(400, `Tile with ID ${tileId} didn't assigned to Catalog ${catalogId}`);
     });
+
+    // srv.before('READ', '*', req => {
+    //     req.utils.sendMessage();
+    // });
 
     srv.before(['DELETE', 'UPDATE'], '*', async (req) => {
         const deletedEntry = await SELECT.one().from(req.target.name).where({ ID: req.data.ID });

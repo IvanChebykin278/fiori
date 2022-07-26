@@ -9,6 +9,9 @@ sap.ui.define([
         return BaseController.extend("fiori.semanticobjects.controller.Overview", {
 
             onInit: function () {
+
+                BaseController.prototype.onInit.apply(this,arguments);
+
                 var oData = {
                     selectedSemanticObject: {
                         data: null,
@@ -56,10 +59,9 @@ sap.ui.define([
             onCancel: function(oEvent) {
                 var oSource = oEvent.getSource();
                 var oDialog = oSource.getParent();
-                var sPath = oDialog.getBindingContext().getPath();
+                var sPath = oSource.getBindingContext().getPath();
     
-                this.getModel().resetChanges();
-                this.getModel().refresh(true);
+                this.getModel().resetChanges([ sPath ], true, true);
                 oDialog.close();
             },
 
