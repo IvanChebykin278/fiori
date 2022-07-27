@@ -15,15 +15,17 @@ sap.ui.define([
 	return BaseController.extend("fiori.designer.controller.Master", {
 		
 		onInit : function () {
-			BaseController.prototype.onInit.apply(this, arguments);  
 			var oRouter = this.getRouter();
-			oRouter.getRoute("CatalogsDetails").attachPatternMatched(this.changeTab("Catalogs"), this);
-			oRouter.getRoute("GroupsDetails").attachPatternMatched(this.changeTab("Groups"), this);        
+			oRouter.getRoute("CatalogsDetails").attachPatternMatched(this.changeTabCatalogs, this);
+			oRouter.getRoute("GroupsDetails").attachPatternMatched(this.changeTabGroups, this);  
+		},
+		
+		changeTabCatalogs: function(oEvent) {
+			this.getView().byId("myTabContainer").setSelectedKey("Catalogs");
 		},
 
-		changeTab: function(sTabKey) {
-		
-			this.getView().byId("myTabContainer").setSelectedKey(`${sTabKey}`);
+		changeTabGroups: function(oEvent) {
+			this.getView().byId("myTabContainer").setSelectedKey("Groups");
 		},
 
 		onTabSelected: function(oEvent) {
