@@ -4,60 +4,40 @@ sap.ui.define([
 	"sap/ui/model/FilterOperator",
 	"sap/ui/model/json/JSONModel",
 	"./BaseController",
-	'sap/m/TabContainerItem'
-], function (Device, Filter, FilterOperator, JSONModel, BaseController, TabContainerItem) {
+	'sap/m/IconTabBar',
+	"sap/ui/core/routing/Router"
+
+], function (Device, Filter, FilterOperator, JSONModel, BaseController, IconTabBar) {
 	"use strict";
 
 	
 
 	return BaseController.extend("fiori.designer.controller.Master", {
 		
-		sTabKey : "Catalogs",
-		
 		onInit : function () {
-
-			BaseController.prototype.onInit.apply(this, arguments);
-
-			var oData = {
-                selectedCatalog: {
-                    data: null,
-                    bindingContextPath: null,
-                    isSelected: false
-                }
-            };
-            var oModel = new JSONModel(oData);
-            this.getView().setModel(oModel, "catalogSelection");
+			BaseController.prototype.onInit.apply(this, arguments);  
+			var oRouter = this.getRouter();
+			oRouter.getRoute("CatalogsDetails").attachPatternMatched(this.changeTab("Catalogs"), this);
+			oRouter.getRoute("GroupsDetails").attachPatternMatched(this.changeTab("Groups"), this);        
 		},
 
-		onSelectionChange: function(oEvent) {
-            var oSelectedItem = oEvent.getParameter("listItem");
-            var oSelectedData = oSelectedItem.getBindingContext().getProperty();
-            var sPath = oSelectedItem.getBindingContext().getPath();
-            this.getModel("catalogSelection").setProperty("/selectedCatalog", {
-                    data: oSelectedData,
-                    bindingContextPath: sPath,
-                    isSelected: true
-            })
-        },
+		changeTab: function(sTabKey) {
+		
+			this.getView().byId("myTabContainer").setSelectedKey(`${sTabKey}`);
+		},
 
-		onItemSelected: function(oEvent) {
+		onTabSelected: function(oEvent) {
 			var oItem = oEvent.getParameter("item");
 			this.sTabKey = oItem.getProperty("key");
+			// this.onUpdateFinished(this.sTabKey);
+
+			this.getRouter().navTo(`${this.sTabKey}Details`) 
 		},
 
-		onSearch: function (oEvent) {
-			// add filter for search
-			var aFilters = [];
-			var sQuery = oEvent.getSource().getValue();
-			if (sQuery && sQuery.length > 0) {
-				var filter = new Filter("title", FilterOperator.Contains, sQuery);
-				aFilters.push(filter);
-			};
+		onPressAdd: function(){
 
-			// update list binding
-			var oList = this.byId(`idList${this.sTabKey}`);
-			var oBinding = oList.getBinding("items");
-			oBinding.filter(aFilters);
 		},
+
+		
 	});
 })

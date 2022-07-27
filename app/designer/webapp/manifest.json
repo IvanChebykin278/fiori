@@ -31,6 +31,10 @@
           "annotations": [],
           "odataVersion": "2.0"
         }
+      },
+      "selectedItem": {
+        "uri": "/model/selectedItem.json",
+        "type": "JSON"
       }
     }
   },
@@ -70,6 +74,11 @@
       "cozy": true
     },
     "models": {
+      "selectedItem": {
+				"type": "sap.ui.model.json.JSONModel",
+				"dataSource": "selectedItem"
+      },
+
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
@@ -100,42 +109,66 @@
         "viewType": "XML",
         "async": true,
         "viewPath": "fiori.designer.view",
-        "controlId": "app"
+        "controlId": "app",
+        "clearControlAggregation": true
 			},
 			"routes": [
 				{
-					"name": "home",
+					"name": "main",
 					"pattern": "",
 					"target": [
-						"Master",
-						"catalogDetails"
+            "catalogsList",
+						"catalogsDetails"
 					]
 				},
 				{
-					"name": "catalogDetails",
-					"pattern": "catalogs/:Id:",
+					"name": "CatalogsDetails",
+					"pattern": "catalogs/:ID:",
 					"target": [
-						"Master",
-						"catalogDetails"
+            "catalogsList",
+						"catalogsDetails"
+					]
+				},
+        {
+					"name": "GroupsDetails",
+					"pattern": "groups/:ID:",
+					"target": [
+            "groupsList",
+						"groupsDetails"
 					]
 				}
 			],
 			"targets": {
-        "layout": {
-          "viewName": "Layout",
-          "viewId": "layout",
-          "controlId": "app",
-          "controlAggregation": "content"
-        },
 				"Master": {
 					"viewName": "Master",
-          "viewId": "catalogsMaster",
+          "viewId": "Master",
           "controlAggregation": "masterPages"
 				},
-				"catalogDetails": {
+				"catalogsDetails": {
 					"viewName": "CatalogsDetails",
           "viewId": "catalogsDetails",
           "controlAggregation": "detailPages"
+				},
+        "groupsDetails": {
+					"viewName": "GroupsDetails",
+          "viewId": "groupsDetails",
+          "controlAggregation": "detailPages"
+				},
+        "groupsList": {
+					"viewName": "GroupsMasterList",
+          "parent": "Master",
+					"controlId": "myTabContainer",
+          "viewId": "groupsMasterList",
+          "controlAggregation": "content",
+          "clearAggregation": true
+				},
+        "catalogsList": {
+					"viewName": "CatalogsMasterList",
+          "parent": "Master",
+					"controlId": "myTabContainer",
+          "viewId": "catalogsMasterList",
+          "controlAggregation": "content",
+          "clearAggregation": true
 				}
 			}
 		},

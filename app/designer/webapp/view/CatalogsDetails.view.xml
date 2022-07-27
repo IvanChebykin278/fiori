@@ -8,5 +8,5 @@
   xmlns:semantic="sap.m.semantic" 
   xmlns:footerbar="sap.ushell.ui.footerbar" 
   xmlns:html="http://www.w3.org/1999/xhtml">
-  <semantic:DetailPage/>
+  <semantic:DetailPage title="Catalog: {selectedItem>/selectedItem/data/ID}"/>
   </mvc:View>

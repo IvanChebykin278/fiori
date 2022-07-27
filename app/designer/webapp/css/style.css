@@ -8,3 +8,12 @@
 div.sapMTabContainer.noCloseButtons > .sapMTabStripContainer > .sapMTabStrip > .sapMTSTabsContainer > .sapMTSTabs > .sapMTabStripItem > .sapMTSItemCloseBtnCnt {
     visibility: hidden;
   }
+
+.myAddButton{
+    height: 100%;
+    width: 97%;
+}
+
+.govnoSuka{
+    padding: 0
+}

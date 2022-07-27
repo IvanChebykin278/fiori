@@ -94,8 +94,24 @@ sap.ui.define([
         handleMessagePopoverPress: function(oEvent) {
 
             this.oMessagePopover.toggle(oEvent.getSource());
-        }
+        },
         
-        
+        onUpdateFinished : function(sTabKey){
+			var firstItem = this.getView().byId(`idList${sTabKey}`).getItems()[0];   
+			this.getView().byId(`idList${sTabKey}`).setSelectedItem(firstItem,true);
+			var oSelectedData = firstItem.getBindingContext().getProperty();
+            var sPath = firstItem.getBindingContext().getPath();
+            this.getModel("selectedItem").setProperty("/selectedItem", {
+                    data: oSelectedData,
+                    bindingContextPath: sPath,
+                    isSelected: true
+			});
+			var sCatalogId = firstItem.getBindingContext().getProperty("ID");
+			this.getOwnerComponent().getRouter()
+				.navTo(`${sTabKey}Details`,
+					{ID:sCatalogId},
+					!Device.system.phone);
+
+		}
     });
 });
