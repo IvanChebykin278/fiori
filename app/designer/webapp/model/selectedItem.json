@@ -2,6 +2,8 @@
     "selectedItem": {
         "data": null,
         "bindingContextPath": null,
-        "isSelected": true
+        "isSelected": true,
+        "totalItems": null,
+        "delay": null
 }
 }

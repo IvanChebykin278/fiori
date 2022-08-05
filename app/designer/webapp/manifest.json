@@ -1,5 +1,5 @@
 {
-  "_version": "1.40.0",
+  "_version": "1.104.1",
   "sap.app": {
     "id": "fiori.designer",
     "type": "application",
